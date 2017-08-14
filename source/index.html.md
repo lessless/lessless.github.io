@@ -32,28 +32,34 @@ The program monero-wallet-rpc replaced the rpc interface that was in simplewalle
 > All monero-wallet-rpc methods use the same JSON RPC interface.
 
 ```shell
-IP=127.0.0.1
-PORT=18082
-METHOD="make_integrated_address"
+
 PARAMS="{\"payment_id\":\"1234567890123456789012345678900012345678901234567890123456789000\"}"
-curl \
-    -X POST http://$IP:$PORT/json_rpc \
-    -d '{"jsonrpc":"2.0","id":"0","method":"'$METHOD'","params":'"$PARAMS"'}' \
-    -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18082/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_integrated_address",
+    "params":{
+      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+    }
+  }'
 ```
 
 > If the monero-wallet-rpc was executed with the `--rpc-login` argument as `username:password`, then follow this example:
 
 ```shell
-IP=127.0.0.1
-PORT=18082
-METHOD="make_integrated_address"
-PARAMS="{\"payment_id\":\"1234567890123456789012345678900012345678901234567890123456789000\"}"
-curl \
-    -u username:password --digest \
-    -X POST http://$IP:$PORT/json_rpc \
-    -d '{"jsonrpc":"2.0","id":"0","method":"'$METHOD'","params":'"$PARAMS"'}' \
-    -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18082/json_rpc
+  -u username:password --digest
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_integrated_address",
+    "params":{
+      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+    }
+  }'
 ```
 
 # Daemon JSON RPC methods
