@@ -1,0 +1,604 @@
+# Daemon JSON RPC methods
+
+## getblockcount
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result" :{
+      "count": 993163,
+      "status": "OK"
+   }
+}
+```
+
+Look up how many blocks are in the longest chain known to the node.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+count |  unsigned int | Number of blocks in longest chain seen by the node.
+status | string | General RPC error code. "OK" means everything looks good.
+
+
+## on_getblockhash
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{"jsonrpc": "2.0","id": "0","method": "on_getblockhash", "params": [912345]}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":"e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6"
+}
+```
+
+Look up a block's hash by its height.
+
+
+### Inputs
+
+Parameter | Type|Description
+--------- | ----|-----------
+block height |int array| int array of length 1
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+block hash |  string | Block's hash
+
+
+## getblocktemplate
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getblocktemplate",
+    "params": {
+      "wallet_address": "44GBHzv6ZyQdJkjqZje6KLZ3xSyN1hBSFAnLP6EAqJtCRVzMzZmeXTC2AHKDS9aEDTRKmo6a6o9r9j86pYfhCWDkKjbtcns",
+      "reserve_size": 60
+   }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+   "id":"0",
+   "jsonrpc":"2.0",
+   "result":{
+      "blocktemplate_blob":"01029af88cb70568b84a11dc9406ace9e635918ca03b008f7728b9726b327c1b482a98d81ed83000000000018bd03c01ffcfcf3c0493d7cec7020278dfc296544f139394e5e045fcda1ba2cca5b69b39c9ddc90b7e0de859fdebdc80e8eda1ba01029c5d518ce3cc4de26364059eadc8220a3f52edabdaf025a9bff4eec8b6b50e3d8080dd9da417021e642d07a8c33fbe497054cfea9c760ab4068d31532ff0fbb543a7856a9b78ee80c0f9decfae01023ef3a7182cb0c260732e7828606052a0645d3686d7a03ce3da091dbb2b75e5955f01ad2af83bce0d823bf3dbbed01ab219250eb36098c62cbb6aa2976936848bae53023c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001f12d7c87346d6b84e17680082d9b4a1d84e36dd01bd2c7f3b3893478a8d88fb3",
+      "difficulty":982540729,
+      "height":993231,
+      "prev_hash":"68b84a11dc9406ace9e635918ca03b008f7728b9726b327c1b482a98d81ed830",
+      "reserved_offset":246,
+      "status":"OK"
+   }
+}
+```
+
+Lookup block template
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+wallet_address |  string |  Address of wallet to receive coinbase transactions if block is successfully mined.
+difficulty |  unsigned int | Reserve size.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+blocktemplate_blob |  string | Blob on which to try to mine a new block.
+difficulty |  unsigned int | Difficulty of next block.
+height | unsigned int | Height on which to mine.
+prev_hash | string | Hash of the most recent block on which to mine the next block.
+reserved_offset | unsigned int | Reserved offset.
+status | string |  General RPC error code. "OK" means everything looks good.
+
+
+## submitblock
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "submitblock",
+    "params": "XXX"
+}'
+
+```
+
+
+Submit a mined block to the network.
+
+### Inputs
+
+Parameter | Type
+--------- | -------
+Block blob data  |  string
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+status | string | Block submission status.
+
+## getlastblockheader
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getlastblockheader",
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "block_header": {
+       "depth": 0,
+       "difficulty": 746963928,
+       "hash": "ac0f1e226268d45c99a16202fdcb730d8f7b36ea5e5b4a565b1ba1a8fc252eb0",
+       "height": 990793,
+       "major_version": 1,
+       "minor_version": 1,
+       "nonce": 1550,
+       "orphan_status": false,
+       "prev_hash": "386575e3b0b004ed8d458dbd31bff0fe37b280339937f971e06df33f8589b75c",
+       "reward": 6856609225169,
+       "timestamp": 1457589942
+    },
+    "status": "OK"
+  }
+}
+```
+
+Block header information for the most recent block is easily retrieved with this method. No inputs are needed.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+block_header |  object |  A structure containing block header information.
+
+<%= partial "includes/params_objects/block_header" %>
+
+
+## getblockheaderbyhash
+
+> In this example, block `912345` is looked up by its hash:
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getblockheaderbyhash",
+    "params": {
+      "hash": "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6"
+  }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "block_header": {
+       "depth": 78376,
+       "difficulty": 815625611,
+       "hash": "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6",
+       "height": 912345,
+       "major_version": 1,
+       "minor_version": 2,
+       "nonce": 1646,
+       "orphan_status": false,
+       "prev_hash": "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78",
+       "reward": 7388968946286,
+       "timestamp": 1452793716
+    },
+    "status": "OK"
+  }
+}
+```
+
+Block header information can be retrieved using either a block's hash or height. This method includes a block's hash as an input parameter to retrieve basic information about the block.
+
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+hash |  string | The block's sha256 hash.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+block_header |  object |  A structure containing block header information. See [getlastblockheader](#getlastblockheader).
+
+
+## getblockheaderbyheight
+
+> Block header information can be retrieved using either a block's hash or height. This method includes a block's hash as an input parameter to retrieve basic information about the block.
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getblockheaderbyheight",
+    "params": {
+      "height": 912345
+  }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "block_header": {
+       "depth": 78376,
+       "difficulty": 815625611,
+       "hash": "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6",
+       "height": 912345,
+       "major_version": 1,
+       "minor_version": 2,
+       "nonce": 1646,
+       "orphan_status": false,
+       "prev_hash": "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78",
+       "reward": 7388968946286,
+       "timestamp": 1452793716
+    },
+    "status": "OK"
+  }
+}
+```
+
+Similar to [getblockheaderbyhash](#getblockheaderbyhash) above, this method includes a block's height as an input parameter to retrieve basic information about the block.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+height | unsigned int | The block's height.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+block_header |  object |  A structure containing block header information.
+
+<%= partial "includes/params_objects/block_header" %>
+
+
+## getblock
+
+> **Look up by height:**
+> In the following example, block `912345` is looked up by its height. Note that block `912345` does not have any non-coinbase transactions. (See the next example for a block with extra transactions):
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getblockheaderbyheight",
+    "params": {
+      "height": 912345
+  }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "blob": "…",
+    "block_header": {
+      "depth": 80694,
+      "difficulty": 815625611,
+      "hash": "e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6",
+      "height": 912345,
+      "major_version": 1,
+      "minor_version": 2,
+      "nonce": 1646,
+      "orphan_status": false,
+      "prev_hash": "b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78",
+      "reward": 7388968946286,
+      "timestamp": 1452793716
+    },
+    "json": "{
+      \"major_version\": 1,
+      \"minor_version\": 2,
+      \"timestamp\": 1452793716,
+      \"prev_id\": \"b61c58b2e0be53fad5ef9d9731a55e8a81d972b8d90ed07c04fd37ca6403ff78\",
+      \"nonce\": 1646,
+      \"miner_tx\": {
+        \"version\": 1,
+        \"unlock_time\": 912405,
+        \"vin\": [
+          {
+            \"gen\": {
+              \"height\": 912345
+            }
+          }
+        ],
+        \"vout\": [
+          {
+            \"amount\": 8968946286,
+            \"target\": {
+              \"key\": \"378b043c1724c92c69d923d266fe86477d3a5ddd21145062e148c64c57677008\"
+            }
+          },
+          {
+            \"amount\": 80000000000,
+            \"target\": {
+              \"key\": \"73733cbd6e6218bda671596462a4b062f95cfe5e1dbb5b990dacb30e827d02f2\"
+            }
+          },
+          {
+            \"amount\": 300000000000,
+            \"target\": {
+              \"key\": \"47a5dab669770da69a860acde21616a119818e1a489bb3c4b1b6b3c50547bc0c\"
+            }
+          },
+          {
+            \"amount\": 7000000000000,
+            \"target\": {
+              \"key\": \"1f7e4762b8b755e3e3c72b8610cc87b9bc25d1f0a87c0c816ebb952e4f8aff3d\"
+            }
+          }
+        ],
+        \"extra\": [
+          1, 253, 10, 119, 137, 87, 244, 243, 16, 58, 131, 138, 253, 164, 136, 195, 205, 173, 242, 105, 123, 61, 52,
+          173, 113, 35, 66, 130, 178, 250, 217, 16, 14, 2, 8, 0, 0, 0, 11, 223, 194, 193, 108
+        ],
+        \"signatures\": [
+
+        ]
+      },
+      \"tx_hashes\": [
+
+      ]
+    }",
+    "status": "OK"
+  }
+}
+```
+
+> **Look up by hash:**
+> In the following example, block `993056` is looked up by its hash. Note that block `993056` has 3 non-coinbase transactions:
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getblockheaderbyheight",
+    "params": {
+      "hash": "510ee3c4e14330a7b96e883c323a60ebd1b5556ac1262d0bc03c24a3b785516f"
+  }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "blob": "…",
+    "block_header": {
+      "depth": 12,
+      "difficulty": 964985344,
+      "hash": "510ee3c4e14330a7b96e883c323a60ebd1b5556ac1262d0bc03c24a3b785516f",
+      "height": 993056,
+      "major_version": 1,
+      "minor_version": 2,
+      "nonce": 2036,
+      "orphan_status": false,
+      "prev_hash": "0ea4af6547c05c965afc8df6d31509ff3105dc7ae6b10172521d77e09711fd6d",
+      "reward": 6932043647005,
+      "timestamp": 1457720227
+    },
+    "json": {
+      \"major_version\": 1,
+      \"minor_version\": 2,
+      \"timestamp\": 1457720227,
+      \"prev_id\": \"0ea4af6547c05c965afc8df6d31509ff3105dc7ae6b10172521d77e09711fd6d\",
+      \"nonce\": 2036,
+      \"miner_tx\": {
+        \"version\": 1,
+        \"unlock_time\": 993116,
+        \"vin\": [
+          {
+            \"gen\": {
+              \"height\": 993056
+            }
+          }
+        ],
+        \"vout\": [
+          {
+            \"amount\": 2043647005,
+            \"target\": {
+              \"key\": \"59e9d685b3484886bc7b47c133e6099ecdf212d5eaa16ce19cd58e8c3c1e590a\"
+            }
+          },
+          {
+            \"amount\": 30000000000,
+            \"target\": {
+              \"key\": \"4c5e2f542d25513c46b9e3b7d40140a22d0ae5314bfcae492ad9f56fff8185f0\"
+            }
+          },
+          {
+            \"amount\": 900000000000,
+            \"target\": {
+              \"key\": \"13dd8ffdac9e6a2f71e327dad65328198dc879a492d145eae72677c0703a3515\"
+            }
+          },
+          {
+            \"amount\": 6000000000000,
+            \"target\": {
+              \"key\": \"62bda00341681dccbc066757862da593734395745bdfe1fdc89b5948c86a5d4c\"
+            }
+          }
+        ],
+        \"extra\": [
+          1, 182, 145, 133, 28, 240, 87, 185, 195, 2, 163, 219, 202, 135, 158, 28, 186, 76, 196, 80, 97, 202, 85, 170,
+          166, 224, 60, 220, 103, 171, 158, 69, 80, 2, 8, 0, 0, 0, 12, 97, 127, 223, 22
+        ],
+        \"signatures\": [
+
+        ]
+      },
+      \"tx_hashes\": [
+        \"79c6b9f00db027bde151705aafe85c495883aae2597d5cb8e1adb2e0f3ae1d07\",
+        \"d715db73331abc3ec588ef07c7bb195786a4724b08dff431b51ffa32a4ce899b\",
+        \"b197066426c0ed89f0b431fe171f7fd62bc95dd29943daa7cf3585cf1fdfc99d\"
+      ]
+    }",
+    "status": "OK",
+    "tx_hashes": [
+      "79c6b9f00db027bde151705aafe85c495883aae2597d5cb8e1adb2e0f3ae1d07",
+      "d715db73331abc3ec588ef07c7bb195786a4724b08dff431b51ffa32a4ce899b",
+      "b197066426c0ed89f0b431fe171f7fd62bc95dd29943daa7cf3585cf1fdfc99d"
+    ]
+  }
+}
+```
+
+Full block information can be retrieved by either block height or hash, like with the above block header calls. For full block information, both lookups use the same method, but with different input parameters.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+height | unsigned int | The block's height.
+hash | string | The block's hash.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+blob |  string | Hexadecimal blob of block information.
+block_header |  object |  A structure containing block header information.
+json | json string |  JSON formatted block details
+status | string | General RPC error code. "OK" means everything looks good.
+
+<%= partial "includes/params_objects/block_header" %>
+
+_**`json`** field structure(when parsed)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+major_version  |  unsigned int  | Same as in block header.
+minor_version  |  unsigned int  | Same as in block header.
+timestamp |  unsigned int  |  Same as in block header.
+prev_id | string | Same as `prev_hash` in block header.
+miner_tx  | object | Miner transaction information(see below).
+tx_hashes | array | List of hashes of non-coinbase transactions in the block. If there are no other transactions, this will be an empty list.
+
+_**`miner_tx`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+version  |  -  | Transaction version number.
+unlock_time |  -  | The block height when the coinbase transaction becomes spendable.
+vin |  array |  List of transaction inputs(see below)
+vout | array | List of transaction outputs(see below).
+extra  | - | Usually called the "transaction ID" but can be used to include any random 32 byte/64 character hex string.
+signatures | - | Contain signatures of tx signers. Coinbased txs do not have signatures.
+
+_**`miner_tx.vin`** field structure (transaction inputs list)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+gen  | array | Miner txs are coinbase txs, or "gen"(see below).
+
+_**`miner_tx.vin[].gen`** field structure (transaction inputs list)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+height  | - | This block height, a.k.a. when the coinbase is generated.
+
+_**`miner_tx.vout`** field structure (transaction outputs list)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount  | array | The amount of the output, in atomic units.
+target  | object | TODO: Add description (see below).
+
+_**`miner_tx.vout[].target`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key  | - | TODO: Add description
+
+
+
