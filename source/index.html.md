@@ -3,13 +3,9 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='https://getmonero.org'>GetMonero.org</a>
 
 includes:
   - errors
@@ -19,221 +15,171 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Monero API! The documentation divided into two parts - Daemon and Wallet. Majority of Daemon's RPC calls uses JSON RPC interface while some use their own interfaces, as demonstrated below. In contrast requests Wallet RPC calls are served through the JSON RPC interface entirely.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+The JSON RPC endpont is `/json_rpc`
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+<aside class="notice">
+Note: "atomic units" refer to the smallest fraction of 1 XMR according to the monerod implementation. <strong>1 XMR = 1e12 atomic units</strong>.
+</aside>
+
 
 # Authentication
 
-> To authorize, use this code:
 
-```ruby
-require 'kittn'
+The program monero-wallet-rpc replaced the rpc interface that was in simplewallet and then monero-wallet-cli.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> All monero-wallet-rpc methods use the same JSON RPC interface.
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+IP=127.0.0.1
+PORT=18082
+METHOD="make_integrated_address"
+PARAMS="{\"payment_id\":\"1234567890123456789012345678900012345678901234567890123456789000\"}"
+curl \
+    -X POST http://$IP:$PORT/json_rpc \
+    -d '{"jsonrpc":"2.0","id":"0","method":"'$METHOD'","params":'"$PARAMS"'}' \
+    -H 'Content-Type: application/json'
 ```
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+> If the monero-wallet-rpc was executed with the `--rpc-login` argument as `username:password`, then follow this example:
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+IP=127.0.0.1
+PORT=18082
+METHOD="make_integrated_address"
+PARAMS="{\"payment_id\":\"1234567890123456789012345678900012345678901234567890123456789000\"}"
+curl \
+    -u username:password --digest \
+    -X POST http://$IP:$PORT/json_rpc \
+    -d '{"jsonrpc":"2.0","id":"0","method":"'$METHOD'","params":'"$PARAMS"'}' \
+    -H 'Content-Type: application/json'
 ```
 
-```javascript
-const kittn = require('kittn');
+# Daemon JSON RPC methods
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+## getblockcount
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+   "id": "0",
+   "jsonrpc": "2.0",
+   "result" :{
+      "count": 993163,
+      "status": "OK"
+   }
+}
 ```
 
-This endpoint retrieves all kittens.
+Look up how many blocks are in the longest chain known to the node.
 
-### HTTP Request
+### Inputs
 
-`GET http://example.com/api/kittens`
+None
 
-### Query Parameters
+### Outputs
 
-Parameter | Default | Description
+Parameter | Type | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+count |  unsigned int | Number of blocks in longest chain seen by the node.
+status | string | General RPC error code. "OK" means everything looks good.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## on_getblockhash
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{"jsonrpc": "2.0","id": "0","method": "on_getblockhash", "params": [912345]}'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+   "id":"0",
+   "jsonrpc":"2.0",
+   "result":"e22cf75f39ae720e8b71b3d120a5ac03f0db50bba6379e2850975b4859190bc6"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+Look up a block's hash by its height.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
-### HTTP Request
+### Inputs
 
-`GET http://example.com/kittens/<ID>`
+Parameter | Type|Description
+--------- | ----|-----------
+block height |int array| int array of length 1
 
-### URL Parameters
+### Outputs
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter | Type | Description
+--------- | ------- | -----------
+block hash |  string | Block's hash
 
-## Delete a Specific Kitten
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
+## getblocktemplate
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+   "jsonrpc": "2.0",
+   "id": "0",
+   "method": "getblocktemplate",
+   "params": {
+      "wallet_address": "44GBHzv6ZyQdJkjqZje6KLZ3xSyN1hBSFAnLP6EAqJtCRVzMzZmeXTC2AHKDS9aEDTRKmo6a6o9r9j86pYfhCWDkKjbtcns",
+      "reserve_size": 60
+   }
+}'
 
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+   "id":"0",
+   "jsonrpc":"2.0",
+   "result":{
+      "blocktemplate_blob":"01029af88cb70568b84a11dc9406ace9e635918ca03b008f7728b9726b327c1b482a98d81ed83000000000018bd03c01ffcfcf3c0493d7cec7020278dfc296544f139394e5e045fcda1ba2cca5b69b39c9ddc90b7e0de859fdebdc80e8eda1ba01029c5d518ce3cc4de26364059eadc8220a3f52edabdaf025a9bff4eec8b6b50e3d8080dd9da417021e642d07a8c33fbe497054cfea9c760ab4068d31532ff0fbb543a7856a9b78ee80c0f9decfae01023ef3a7182cb0c260732e7828606052a0645d3686d7a03ce3da091dbb2b75e5955f01ad2af83bce0d823bf3dbbed01ab219250eb36098c62cbb6aa2976936848bae53023c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001f12d7c87346d6b84e17680082d9b4a1d84e36dd01bd2c7f3b3893478a8d88fb3",
+      "difficulty":982540729,
+      "height":993231,
+      "prev_hash":"68b84a11dc9406ace9e635918ca03b008f7728b9726b327c1b482a98d81ed830",
+      "reserved_offset":246,
+      "status":"OK"
+   }
 }
 ```
 
-This endpoint retrieves a specific kitten.
+Lookup block template
 
-### HTTP Request
+### Inputs
 
-`DELETE http://example.com/kittens/<ID>`
+Parameter | Type | Description
+--------- | ------- | -----------
+wallet_address |  string |  Address of wallet to receive coinbase transactions if block is successfully mined.
+difficulty |  unsigned int | Reserve size.
 
-### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+blocktemplate_blob |  string | Blob on which to try to mine a new block.
+difficulty |  unsigned int | Difficulty of next block.
+height | unsigned int | Height on which to mine.
+prev_hash | string | Hash of the most recent block on which to mine the next block.
+reserved_offset | unsigned int | Reserved offset.
+status | string |  General RPC error code. "OK" means everything looks good.
+
 
