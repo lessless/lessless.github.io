@@ -681,3 +681,70 @@ recv_idle_time | unsigned int | -
 send_count | unsigned int | -
 send_idle_time | unsigned int | -
 state | unsigned int | -
+
+## get_info
+
+> Following is an example of `get_info` and it's return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "get_info"
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+    "alt_blocks_count": 5,
+    "difficulty": 972165250,
+    "grey_peerlist_size": 2280,
+    "height": 993145,
+    "incoming_connections_count": 0,
+    "outgoing_connections_count": 8,
+    "status": "OK",
+    "target": 60,
+    "target_height": 993137,
+    "testnet": false,
+    "top_block_hash": "",
+    "tx_count": 564287,
+    "tx_pool_size": 45,
+    "white_peerlist_size": 529
+  }
+}
+```
+
+Retrieve general information about the state of your node and the network.
+
+### Inputs
+
+None
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+alt_blocks_count | unsigned int | Number of alternative blocks to main chain.
+difficulty | unsigned int | Network difficulty (analogous to the strength of the network)
+grey_peerlist_size | unsigned int | Grey Peerlist Size
+height | unsigned int |  Current length of longest chain known to daemon.
+incoming_connections_count | unsigned int | Number of peers connected to and pulling from your node.
+outgoing_connections_count | unsigned int | Number of peers that you are connected to and getting information from.
+target | unsigned int |  Current target for next proof of work.
+target_height | unsigned int | The height of the next block in the chain.
+testnet | boolean | States if the node is on the testnet (true) or mainnet (false).
+top_block_hash | string |  Hash of the highest block in the chain.
+tx_count | unsigned int | Total number of non-coinbase transaction in the chain.
+tx_pool_siz | unsigned int | Number of transactions that have been broadcast but not included in a block.
+white_peerlist_size | unsigned int | White Peerlist Size
+status | string |  General RPC error code. "OK" means everything looks good.
+
