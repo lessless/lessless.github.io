@@ -263,27 +263,33 @@ Note: "atomic units" refer to the smallest fraction of 1 XMR according to the mo
 <blockquote>
 <p>All monero-wallet-rpc methods use the same JSON RPC interface.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="nv">IP</span><span class="o">=</span>127.0.0.1
-<span class="nv">PORT</span><span class="o">=</span>18082
-<span class="nv">METHOD</span><span class="o">=</span><span class="s2">"make_integrated_address"</span>
+<pre class="highlight shell tab-shell"><code>
 <span class="nv">PARAMS</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">payment_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1234567890123456789012345678900012345678901234567890123456789000</span><span class="se">\"</span><span class="s2">}"</span>
-curl <span class="se">\</span>
-    -X POST http://<span class="nv">$IP</span>:<span class="nv">$PORT</span>/json_rpc <span class="se">\</span>
-    -d <span class="s1">'{"jsonrpc":"2.0","id":"0","method":"'</span><span class="nv">$METHOD</span><span class="s1">'","params":'</span><span class="s2">"</span><span class="nv">$PARAMS</span><span class="s2">"</span><span class="s1">'}'</span> <span class="se">\</span>
-    -H <span class="s1">'Content-Type: application/json'</span>
+curl -X POST http://127.0.0.1:18082/json_rpc
+  -H <span class="s1">'Content-Type: application/json'</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_integrated_address",
+    "params":{
+      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+    }
+  }'</span>
 </code></pre>
 <blockquote>
 <p>If the monero-wallet-rpc was executed with the <code>--rpc-login</code> argument as <code>username:password</code>, then follow this example:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code><span class="nv">IP</span><span class="o">=</span>127.0.0.1
-<span class="nv">PORT</span><span class="o">=</span>18082
-<span class="nv">METHOD</span><span class="o">=</span><span class="s2">"make_integrated_address"</span>
-<span class="nv">PARAMS</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">payment_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1234567890123456789012345678900012345678901234567890123456789000</span><span class="se">\"</span><span class="s2">}"</span>
-curl <span class="se">\</span>
-    -u username:password --digest <span class="se">\</span>
-    -X POST http://<span class="nv">$IP</span>:<span class="nv">$PORT</span>/json_rpc <span class="se">\</span>
-    -d <span class="s1">'{"jsonrpc":"2.0","id":"0","method":"'</span><span class="nv">$METHOD</span><span class="s1">'","params":'</span><span class="s2">"</span><span class="nv">$PARAMS</span><span class="s2">"</span><span class="s1">'}'</span> <span class="se">\</span>
-    -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc
+  -u username:password --digest
+  -H <span class="s1">'Content-Type: application/json'</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_integrated_address",
+    "params":{
+      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+    }
+  }'</span>
 </code></pre><h1 id='daemon-json-rpc-methods'>Daemon JSON RPC methods</h1><h2 id='getblockcount'>getblockcount</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
   -H <span class="s1">'Content-Type: application/json'</span>
   -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'</span>
