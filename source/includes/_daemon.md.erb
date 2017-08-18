@@ -805,3 +805,115 @@ voting | unsigned int |  Hard fork voting status.
 window | unsigned int |  Number of blocks over which current votes are cast. Default is 10080 blocks.
 status | string |  General RPC error code. "OK" means everything looks good.
 
+## setbans
+
+> Following is an example of `setbans` and its return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+  "jsonrpc":"2.0",
+  "id":"0",
+  "method":"setbans",
+  "params":{
+    "bans":[
+      {
+        "ip":838969536,
+        "ban":true,
+        "seconds":30
+      }
+    ]
+  }
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "status":"OK"
+  }
+}
+```
+
+Ban another node by IP.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+bans | array |   A list of nodes to ban(see below)
+
+_**`bans[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+ip | unsigned int | Banned IP address, in Int format.
+ban | boolean |  Set `true` to ban.
+seconds | unsigned int |   Local Unix time that IP is banned until.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+status | string |  General RPC error code. "OK" means everything looks good.
+
+
+## getbans
+
+> Following is an example of `getbans` and it's return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc
+  -H 'Content-Type: application/json'
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "getbans"
+}'
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "bans":[
+      {
+        "ip":838969536,
+        "seconds":1457748792
+      }
+    ],
+    "status":"OK"
+  }
+}
+```
+
+Look up banned IPs
+
+### Inputs
+
+None
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+bans | array |  List of banned nodes(see below)
+status | string |  General RPC error code. "OK" means everything looks good.
+
+_**`bans[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+ip | unsigned int | Banned IP address, in Int format.
+seconds | unsigned int |   Local Unix time that IP is banned until.
