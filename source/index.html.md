@@ -8,7 +8,8 @@ toc_footers:
   - <a href='https://getmonero.org'>GetMonero.org</a>
 
 includes:
-  - daemon
+  - daemon_json_rpc
+  - daemon_custom_calls
   - errors
 
 search: true

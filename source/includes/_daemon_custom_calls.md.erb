@@ -1,0 +1,202 @@
+# Other Daemon RPC Calls
+
+Not all daemon RPC calls use the JSON_RPC interface. This section gives examples of these calls.
+
+The data structure for these calls is different than the JSON RPC calls. Whereas the JSON RPC methods were called using the `/json_rpc` extension and specifying a method, these methods are called at their own extensions. For example:
+
+<pre class="highlight plaintext" style="float: none; background-color: #fdfdfd; color: #333"><code>IP=127.0.0.1
+curl -X POST http://127.0.0.1:18081/gettransactions
+  -H 'Content-Type: application/json'
+  -d '{
+    "txs_hashes": [
+      "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
+    ]
+  }'
+</code></pre>
+
+<aside class="notice">
+Note: It is recommended to use JSON RPC where such alternatives exist, rather than the following methods. For example, the recommended way to get a node's height is via the JSON RPC methods <a href="#get_info">get_info</a> or <a href="#getlastblockheader">getlastblockheader</a>, rather than <a href="#getheight">getheight</a> below.
+</aside>
+
+
+## /getheight
+
+> Following is an example of `getheight` and it's return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/getheight
+  -H 'Content-Type: application/json'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "height": 993488,
+  "status": "OK"
+}
+```
+
+Get the node's current height.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+height |  unsigned int | Current length of longest chain known to daemon.
+status | string | General error code."OK" means everything looks good.
+
+## /gettransactions
+
+> Example 1: Return transaction information in binary format and it's return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/gettransactions
+  -H 'Content-Type: application/json'
+  -d '{
+    "txs_hashes": [
+      "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
+    ]
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "txs_as_hex": ["…"]
+  "status": "OK",
+}
+```
+
+> Example 2: Decode returned transaction information in JSON format and it's return.
+> **Note:** the `vout` list has been truncated in the displayed return for space considerations.
+
+```shell
+curl -X POST http://127.0.0.1:18081/gettransactions
+  -H 'Content-Type: application/json'
+  -d '{
+    "txs_hashes": [
+      "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
+    ],
+    "decode_as_json": true
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```
+{
+  "status":"OK",
+  "txs_as_hex":[
+    "…"
+  ],
+  "txs_as_json": "[
+    {
+      \"version\":1,
+      \"unlock_time\":0,
+      \"vin\":[
+        {
+          \"key\":{
+            \"amount\":70000000,
+            \"key_offsets\":[
+              35952
+            ],
+            \"k_image\":\"d16908468dff9438a9814fe96bdaa575f06fe8da85772b72e54926428712293d\"
+          }
+        },
+        {
+          \"key\":{
+            \"amount\":400000000000000,
+            \"key_offsets\":[
+              6830
+            ],
+            \"k_image\":\"c7a7024b763df1181ae6fe821b70669735e38a68162ac02362e33acbe829b605\"
+          }
+        }
+      ],
+      \"vout\":[
+        {
+          \"amount\":50000,
+          \"target\":{
+            \"key\":\"f6be43f7be4f06adcb1d06f4a07c637c7359e009cf3e57bb32b8c9ea636509c3\"
+          }
+        },
+        {
+          \"amount\":200000,
+          \"target\":{
+            \"key\":\"b0a7a8e32f2b5302552bcd8d85112c62838b1f56cccd844eb9b63e0a732d0353\"
+          }
+        }
+      ],
+      \"extra\":[
+        1, 225, 240, 98, 34, 169, 73, 47, 237, 117, 192, 30, 192, 60, 155, 47, 4, 115, 20, 21, 11, 13, 252, 219, 129, 13, 174, 37, 36, 78, 191, 141, 109
+      ],
+      \"signatures\":[
+        \"e6a3be8003d481d2855c8127f56871de3d28a4fb52385b999eb986c831c5cc08361c126b0db24a21b6c4299b438ee2be201d44d57a371230b9cd04395ab8c400\",
+        \"8309851abaf2cf2a7091e0cdb9c83704fa7d68838a7a8ef8c178bb55a1e93a038dd18bb4a7549dc056b7a70e037cabd80911a03f427e36f712756d4c00f38f0b\"
+      ]
+    }
+  ]"
+}
+```
+
+Look up one or more transactions by hash.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+txs_hashes |  array |  List of transaction hashes to look up.
+decode_as_json | boolean | Optional. If set `true`, the returned transaction information will be decoded rather than binary.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+txs_as_json | string |  json string; (Optional - returned if set in inputs.) List of transaction info(see below).
+txs_as_hex | string | Full transaction information as a hex string.
+status | string | General error code."OK" means everything looks good.
+
+_**`txs_as_json[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+version | unsigned int | Transaction version.
+unlock_time | unsigned int | If not 0, this tells when a transaction output is spendable.
+vin | array | List of inputs into transaction(see below).
+vout | array |  List of outputs from transaction(see below)
+extra | array |  Usually called the "payment ID" but can be used to include any random 32 bytes.
+singatures | array | List of ignatures used in ring signature to hide the true origin of the transaction.
+
+_**`txs_as_json[].vin[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key | object | The public key of the previous output spent in this transaction(see below).
+
+_**`txs_as_json[].vin[].key`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount | - | The amount of the input, in atomic units.
+key_offsets | - | A list of integer offets to the input.
+k_image | - | The key image for the given input
+
+_**`txs_as_json[].vout[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount | - | Amount of transaction output, in atomic units..
+target | object | Output destination information(see below).
+
+_**`txs_as_json[].vout[].target`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key | - | The stealth public key of the receiver. Whoever owns the private key associated with this key controls this transaction output.
+
