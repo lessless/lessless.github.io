@@ -1,0 +1,12 @@
+_**`<%= path %>.vout[]`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount | - | Amount of transaction output, in atomic units..
+target | object | Output destination information(see below).
+
+_**`<%= path %>.vout[].target`** field structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key | - | The stealth public key of the receiver. Whoever owns the private key associated with this key controls this transaction output.

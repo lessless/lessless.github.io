@@ -31,7 +31,7 @@ ip | unsigned int | Banned IP address, in Int format.
 seconds | unsigned int |   Local Unix time that IP is banned until.
 
 
-If objects are more than 2 levels deep, than `.`(dot) is used to denote parent - children relationships. For example: ``miner_tx.vout[].target` (See `getblock` call)
+If objects are more than 2 levels deep, than `.`(dot) is used to denote parent - children relationship. For example: `miner_tx.vout[].target` (See `getblock` call), what reads as _`target` filed in the each entry of the `vout` array under the `miner_tx` key_.
 
 A JavaScript terminology is used to describe data types, hence `array` and `object`.
 

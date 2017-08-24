@@ -575,7 +575,7 @@ vout | array | List of transaction outputs(see below).
 extra  | - | Usually called the "transaction ID" but can be used to include any random 32 byte/64 character hex string.
 signatures | - | Contain signatures of tx signers. Coinbased txs do not have signatures.
 
-_**`miner_tx.vin`** field structure (transaction inputs list)_
+_**`miner_tx.vin[]`** field structure (transaction inputs list)_
 
 Parameter | Type | Description
 --------- | ------- | -----------
@@ -587,18 +587,7 @@ Parameter | Type | Description
 --------- | ------- | -----------
 height  | - | This block height, a.k.a. when the coinbase is generated.
 
-_**`miner_tx.vout`** field structure (transaction outputs list)_
-
-Parameter | Type | Description
---------- | ------- | -----------
-amount  | array | The amount of the output, in atomic units.
-target  | object | TODO: Add description (see below).
-
-_**`miner_tx.vout[].target`** field structure_
-
-Parameter | Type | Description
---------- | ------- | -----------
-key  | - | TODO: Add description
+<%= partial "includes/params_objects/vout.md.erb", locals: {path: "miner_tx"} %>
 
 
 ## get_connections
