@@ -214,7 +214,7 @@ key_images | array of strings | List of key image hex strings to check.
 Parameter | Type | Description
 --------- | ------- | -----------
 spent_status |  array of unsigned ints | List of statuses for each image checked. Statuses are follows: <ul><li><code>0</code> = unspent</li><li><code>1</code> = spent in blockchain</li><li><code>2</code> = spent in transaction pool</li></ul>|
-status | string | General error code."OK" means everything looks good.|
+status | string | General error code."OK" means everything looks good.
 
 ## sendrawtransaction
 
@@ -248,7 +248,7 @@ tx_as_hex | string | Full transaction information as hexidecimal string.
 
 Parameter | Type | Description
 --------- | ------- | -----------
-status | string | General error code."OK" means everything looks good.|
+status | string | General error code."OK" means everything looks good.
 
 ## get_transaction_pool
 
@@ -377,3 +377,32 @@ signatures | - | List of ignatures used in ring signature to hide the true origi
 <%= partial "includes/params_objects/vin.md.erb", locals: {path: "transactions[].tx_json"} %>
 
 <%= partial "includes/params_objects/vout.md.erb", locals: {path: "txs_as_json"} %>
+
+## stop_daemon
+
+> Following is an example of `stop_daemon` and it's return:
+
+```shell
+curl -X POST http://127.0.0.1:18081/stop_daemon
+  -H 'Content-Type: application/json'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+ "status": "OK"
+}
+```
+
+Send a command to the daemon to safely disconnect and shut down.
+
+### Inputs
+
+Inputs: None.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+status | string | General error code."OK" means everything looks good.
