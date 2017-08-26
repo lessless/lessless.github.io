@@ -6,8 +6,8 @@ The data structure for these calls is different than the JSON RPC calls. Whereas
 
 <pre class="center-column">
   <code>
-    curl -X POST http://127.0.0.1:18081/gettransactions
-    -H 'Content-Type: application/json'
+    curl -X POST http://127.0.0.1:18081/gettransactions \
+    -H 'Content-Type: application/json' \
     -d '{
       "txs_hashes": [
         "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
@@ -26,7 +26,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 > Following is an example of `getheight` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/getheight
+curl -X POST http://127.0.0.1:18081/getheight \
   -H 'Content-Type: application/json'
 ```
 
@@ -57,8 +57,8 @@ status | string | General error code."OK" means everything looks good.
 > Example 1: Return transaction information in binary format and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/gettransactions
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/gettransactions \
+  -H 'Content-Type: application/json' \
   -d '{
     "txs_hashes": [
       "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
@@ -79,8 +79,8 @@ curl -X POST http://127.0.0.1:18081/gettransactions
 > **Note:** the `vout` list has been truncated in the displayed return for space considerations.
 
 ```shell
-curl -X POST http://127.0.0.1:18081/gettransactions
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/gettransactions \
+  -H 'Content-Type: application/json' \
   -d '{
     "txs_hashes": [
       "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
@@ -184,8 +184,8 @@ singatures | array | List of ignatures used in ring signature to hide the true o
 > Following is an example of `is_key_image_spent` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/is_key_image_spent
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/is_key_image_spent \
+  -H 'Content-Type: application/json' \
   -d '{
     "key_images": [
       "8d1bd8181bf7d857bdb281e0153d84cd55a3fcaa57c3e570f4a49f935850b5e3",
@@ -223,8 +223,8 @@ status | string | General error code."OK" means everything looks good.
 > Following is an example of `sendrawtransaction` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/sendrawtransaction
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/sendrawtransaction \
+  -H 'Content-Type: application/json' \
   -d '{
     "tx_as_hex":"de6a3…"
   }'
@@ -257,7 +257,7 @@ status | string | General error code."OK" means everything looks good.
 > Following is an example of `get_transaction_pool` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/get_transaction_pool
+curl -X POST http://127.0.0.1:18081/get_transaction_pool \
   -H 'Content-Type: application/json'
 ```
 
@@ -385,7 +385,7 @@ signatures | - | List of ignatures used in ring signature to hide the true origi
 > Following is an example of `stop_daemon` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/stop_daemon
+curl -X POST http://127.0.0.1:18081/stop_daemon \
   -H 'Content-Type: application/json'
 ```
 

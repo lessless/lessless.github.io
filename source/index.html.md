@@ -36,8 +36,8 @@ All monero-wallet-rpc methods use the same JSON RPC interface.
 
 <pre class="center-column" >
   <code>
-  curl -X POST http://127.0.0.1:18082/json_rpc
-    -H 'Content-Type: application/json'
+  curl -X POST http://127.0.0.1:18082/json_rpc \
+    -H 'Content-Type: application/json' \
     -d '{
       "jsonrpc":"2.0",
       "id":"0",
@@ -53,9 +53,9 @@ If the monero-wallet-rpc was executed with the `--rpc-login` argument as `userna
 
 <pre class="center-column" >
   <code>
-    curl -X POST http://127.0.0.1:18082/json_rpc
-      -u username:password --digest
-      -H 'Content-Type: application/json'
+    curl -X POST http://127.0.0.1:18082/json_rpc \
+      -u username:password --digest \
+      -H 'Content-Type: application/json' \
       -d '{
         "jsonrpc":"2.0",
         "id":"0",

@@ -3,8 +3,8 @@
 ## getblockcount
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'
 ```
 
@@ -38,8 +38,8 @@ status | string | General RPC error code. "OK" means everything looks good.
 ## on_getblockhash
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{"jsonrpc": "2.0","id": "0","method": "on_getblockhash", "params": [912345]}'
 ```
 
@@ -72,8 +72,8 @@ block hash |  string | Block's hash
 ## getblocktemplate
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -128,8 +128,8 @@ status | string |  General RPC error code. "OK" means everything looks good.
 ## submitblock
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -158,8 +158,8 @@ status | string | Block submission status.
 ## getlastblockheader
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -213,8 +213,8 @@ block_header |  object |  A structure containing block header information.
 > In this example, block `912345` is looked up by its hash:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -273,8 +273,8 @@ block_header |  object |  A structure containing block header information. See [
 > Block header information can be retrieved using either a block's hash or height. This method includes a block's hash as an input parameter to retrieve basic information about the block.
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -335,8 +335,8 @@ block_header |  object |  A structure containing block header information.
 > In the following example, block `912345` is looked up by its height. Note that block `912345` does not have any non-coinbase transactions. (See the next example for a block with extra transactions):
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -432,8 +432,8 @@ curl -X POST http://127.0.0.1:18081/json_rpc
 > In the following example, block `993056` is looked up by its hash. Note that block `993056` has 3 non-coinbase transactions:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -595,8 +595,8 @@ height  | - | This block height, a.k.a. when the coinbase is generated.
 > Following is an example of `get_connections` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -676,8 +676,8 @@ state | unsigned int | -
 > Following is an example of `get_info` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -743,8 +743,8 @@ status | string |  General RPC error code. "OK" means everything looks good.
 > Following is an example of `hard_fork_info` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
@@ -799,8 +799,8 @@ status | string |  General RPC error code. "OK" means everything looks good.
 > Following is an example of `setbans` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
   "jsonrpc":"2.0",
   "id":"0",
@@ -858,8 +858,8 @@ status | string |  General RPC error code. "OK" means everything looks good.
 > Following is an example of `getbans` and it's return:
 
 ```shell
-curl -X POST http://127.0.0.1:18081/json_rpc
-  -H 'Content-Type: application/json'
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
   -d '{
     "jsonrpc": "2.0",
     "id": "0",
