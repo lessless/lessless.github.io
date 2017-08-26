@@ -10,6 +10,7 @@ toc_footers:
 includes:
   - daemon_json_rpc
   - daemon_custom_calls
+  - wallet_json_rpc
   - errors
 
 search: true
@@ -31,36 +32,39 @@ Note: "atomic units" refer to the smallest fraction of 1 XMR according to the mo
 
 The program monero-wallet-rpc replaced the rpc interface that was in simplewallet and then monero-wallet-cli.
 
-> All monero-wallet-rpc methods use the same JSON RPC interface.
+All monero-wallet-rpc methods use the same JSON RPC interface.
 
-```shell
+<pre class="center-column" >
+  <code>
+  curl -X POST http://127.0.0.1:18082/json_rpc
+    -H 'Content-Type: application/json'
+    -d '{
+      "jsonrpc":"2.0",
+      "id":"0",
+      "method":"make_integrated_address",
+      "params":{
+        "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+      }
+    }'
+  </code>
+</pre>
 
-PARAMS="{\"payment_id\":\"1234567890123456789012345678900012345678901234567890123456789000\"}"
-curl -X POST http://127.0.0.1:18082/json_rpc
-  -H 'Content-Type: application/json'
-  -d '{
-    "jsonrpc":"2.0",
-    "id":"0",
-    "method":"make_integrated_address",
-    "params":{
-      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-    }
-  }'
-```
+If the monero-wallet-rpc was executed with the `--rpc-login` argument as `username:password`, then follow this example:
 
-> If the monero-wallet-rpc was executed with the `--rpc-login` argument as `username:password`, then follow this example:
+<pre class="center-column" >
+  <code>
+    curl -X POST http://127.0.0.1:18082/json_rpc
+      -u username:password --digest
+      -H 'Content-Type: application/json'
+      -d '{
+        "jsonrpc":"2.0",
+        "id":"0",
+        "method":"make_integrated_address",
+        "params":{
+          "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+        }
+      }'
+  </code>
+</pre>
 
-```shell
-curl -X POST http://127.0.0.1:18082/json_rpc
-  -u username:password --digest
-  -H 'Content-Type: application/json'
-  -d '{
-    "jsonrpc":"2.0",
-    "id":"0",
-    "method":"make_integrated_address",
-    "params":{
-      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-    }
-  }'
-```
 

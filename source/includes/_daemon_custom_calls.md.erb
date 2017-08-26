@@ -4,15 +4,17 @@ Not all daemon RPC calls use the JSON_RPC interface. This section gives examples
 
 The data structure for these calls is different than the JSON RPC calls. Whereas the JSON RPC methods were called using the `/json_rpc` extension and specifying a method, these methods are called at their own extensions. For example:
 
-<pre class="highlight plaintext" style="float: none; background-color: #fdfdfd; color: #333"><code>IP=127.0.0.1
-curl -X POST http://127.0.0.1:18081/gettransactions
-  -H 'Content-Type: application/json'
-  -d '{
-    "txs_hashes": [
-      "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
-    ]
-  }'
-</code></pre>
+<pre class="center-column">
+  <code>
+    curl -X POST http://127.0.0.1:18081/gettransactions
+    -H 'Content-Type: application/json'
+    -d '{
+      "txs_hashes": [
+        "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
+      ]
+    }'
+</code>
+</pre>
 
 <aside class="notice">
 Note: It is recommended to use JSON RPC where such alternatives exist, rather than the following methods. For example, the recommended way to get a node's height is via the JSON RPC methods <a href="#get_info">get_info</a> or <a href="#getlastblockheader">getlastblockheader</a>, rather than <a href="#getheight">getheight</a> below.
