@@ -225,46 +225,46 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#daemon-json-rpc-methods" class="toc-h1 toc-link" data-title="Daemon JSON RPC methods">Daemon JSON RPC methods</a>
+            <a href="#daemon-json-rpc-calls" class="toc-h1 toc-link" data-title="Daemon JSON RPC Calls">Daemon JSON RPC Calls</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#getblockcount" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getblockcount</a>
+                    <a href="#getblockcount" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getblockcount</a>
                   </li>
                   <li>
-                    <a href="#on_getblockhash" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">on_getblockhash</a>
+                    <a href="#on_getblockhash" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">on_getblockhash</a>
                   </li>
                   <li>
-                    <a href="#getblocktemplate" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getblocktemplate</a>
+                    <a href="#getblocktemplate" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getblocktemplate</a>
                   </li>
                   <li>
-                    <a href="#submitblock" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">submitblock</a>
+                    <a href="#submitblock" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">submitblock</a>
                   </li>
                   <li>
-                    <a href="#getlastblockheader" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getlastblockheader</a>
+                    <a href="#getlastblockheader" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getlastblockheader</a>
                   </li>
                   <li>
-                    <a href="#getblockheaderbyhash" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getblockheaderbyhash</a>
+                    <a href="#getblockheaderbyhash" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getblockheaderbyhash</a>
                   </li>
                   <li>
-                    <a href="#getblockheaderbyheight" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getblockheaderbyheight</a>
+                    <a href="#getblockheaderbyheight" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getblockheaderbyheight</a>
                   </li>
                   <li>
-                    <a href="#getblock" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getblock</a>
+                    <a href="#getblock" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getblock</a>
                   </li>
                   <li>
-                    <a href="#get_connections" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">get_connections</a>
+                    <a href="#get_connections" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">get_connections</a>
                   </li>
                   <li>
-                    <a href="#get_info" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">get_info</a>
+                    <a href="#get_info" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">get_info</a>
                   </li>
                   <li>
-                    <a href="#hard_fork_info" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">hard_fork_info</a>
+                    <a href="#hard_fork_info" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">hard_fork_info</a>
                   </li>
                   <li>
-                    <a href="#setbans" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">setbans</a>
+                    <a href="#setbans" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">setbans</a>
                   </li>
                   <li>
-                    <a href="#getbans" class="toc-h2 toc-link" data-title="Daemon JSON RPC methods">getbans</a>
+                    <a href="#getbans" class="toc-h2 toc-link" data-title="Daemon JSON RPC Calls">getbans</a>
                   </li>
               </ul>
           </li>
@@ -286,7 +286,13 @@
                   <li>
                     <a href="#get_transaction_pool" class="toc-h2 toc-link" data-title="Other Daemon RPC Calls">get_transaction_pool</a>
                   </li>
+                  <li>
+                    <a href="#stop_daemon" class="toc-h2 toc-link" data-title="Other Daemon RPC Calls">stop_daemon</a>
+                  </li>
               </ul>
+          </li>
+          <li>
+            <a href="#wallet-json-rpc-calls" class="toc-h1 toc-link" data-title="Wallet JSON RPC Calls">Wallet JSON RPC Calls</a>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
@@ -310,38 +316,42 @@ Note: "atomic units" refer to the smallest fraction of 1 XMR according to the mo
 <h1 id='authentication'>Authentication</h1>
 <p>The program monero-wallet-rpc replaced the rpc interface that was in simplewallet and then monero-wallet-cli.</p>
 
-<blockquote>
 <p>All monero-wallet-rpc methods use the same JSON RPC interface.</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code>
-<span class="nv">PARAMS</span><span class="o">=</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">payment_id</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">1234567890123456789012345678900012345678901234567890123456789000</span><span class="se">\"</span><span class="s2">}"</span>
-curl -X POST http://127.0.0.1:18082/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
-  -d <span class="s1">'{
-    "jsonrpc":"2.0",
-    "id":"0",
-    "method":"make_integrated_address",
-    "params":{
-      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-    }
-  }'</span>
-</code></pre>
-<blockquote>
+
+<pre class="center-column" >
+  <code>
+  curl -X POST http://127.0.0.1:18082/json_rpc \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "jsonrpc":"2.0",
+      "id":"0",
+      "method":"make_integrated_address",
+      "params":{
+        "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+      }
+    }'
+  </code>
+</pre>
+
 <p>If the monero-wallet-rpc was executed with the <code>--rpc-login</code> argument as <code>username:password</code>, then follow this example:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc
-  -u username:password --digest
-  -H <span class="s1">'Content-Type: application/json'</span>
-  -d <span class="s1">'{
-    "jsonrpc":"2.0",
-    "id":"0",
-    "method":"make_integrated_address",
-    "params":{
-      "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-    }
-  }'</span>
-</code></pre><h1 id='daemon-json-rpc-methods'>Daemon JSON RPC methods</h1><h2 id='getblockcount'>getblockcount</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+
+<pre class="center-column" >
+  <code>
+    curl -X POST http://127.0.0.1:18082/json_rpc \
+      -u username:password --digest \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "jsonrpc":"2.0",
+        "id":"0",
+        "method":"make_integrated_address",
+        "params":{
+          "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+        }
+      }'
+  </code>
+</pre>
+<h1 id='daemon-json-rpc-calls'>Daemon JSON RPC Calls</h1><h2 id='getblockcount'>getblockcount</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'</span>
 </code></pre>
 <blockquote>
@@ -378,8 +388,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <td>General RPC error code. &quot;OK&quot; means everything looks good.</td>
 </tr>
 </tbody></table>
-<h2 id='on_getblockhash'>on_getblockhash</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<h2 id='on_getblockhash'>on_getblockhash</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{"jsonrpc": "2.0","id": "0","method": "on_getblockhash", "params": [912345]}'</span>
 </code></pre>
 <blockquote>
@@ -420,8 +430,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <td>Block&#39;s hash</td>
 </tr>
 </tbody></table>
-<h2 id='getblocktemplate'>getblocktemplate</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<h2 id='getblocktemplate'>getblocktemplate</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -508,8 +518,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <td>General RPC error code. &quot;OK&quot; means everything looks good.</td>
 </tr>
 </tbody></table>
-<h2 id='submitblock'>submitblock</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<h2 id='submitblock'>submitblock</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -545,8 +555,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <td>Block submission status.</td>
 </tr>
 </tbody></table>
-<h2 id='getlastblockheader'>getlastblockheader</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<h2 id='getlastblockheader'>getlastblockheader</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -675,8 +685,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <blockquote>
 <p>In this example, block <code>912345</code> is looked up by its hash:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -744,8 +754,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <blockquote>
 <p>Block header information can be retrieved using either a block&#39;s hash or height. This method includes a block&#39;s hash as an input parameter to retrieve basic information about the block.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -890,8 +900,8 @@ curl -X POST http://127.0.0.1:18082/json_rpc
 <p><strong>Look up by height:</strong>
 In the following example, block <code>912345</code> is looked up by its height. Note that block <code>912345</code> does not have any non-coinbase transactions. (See the next example for a block with extra transactions):</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -985,8 +995,8 @@ In the following example, block <code>912345</code> is looked up by its height. 
 <p><strong>Look up by hash:</strong>
 In the following example, block <code>993056</code> is looked up by its hash. Note that block <code>993056</code> has 3 non-coinbase transactions:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -1363,8 +1373,8 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 <blockquote>
 <p>Following is an example of <code>get_connections</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -1515,8 +1525,8 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 <blockquote>
 <p>Following is an example of <code>get_info</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -1634,8 +1644,8 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 <blockquote>
 <p>Following is an example of <code>hard_fork_info</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -1723,8 +1733,8 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 <blockquote>
 <p>Following is an example of <code>setbans</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
   "jsonrpc":"2.0",
   "id":"0",
@@ -1811,8 +1821,8 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 <blockquote>
 <p>Following is an example of <code>getbans</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "jsonrpc": "2.0",
     "id": "0",
@@ -1885,15 +1895,17 @@ In the following example, block <code>993056</code> is looked up by its hash. No
 
 <p>The data structure for these calls is different than the JSON RPC calls. Whereas the JSON RPC methods were called using the <code>/json_rpc</code> extension and specifying a method, these methods are called at their own extensions. For example:</p>
 
-<pre class="highlight plaintext" style="float: none; background-color: #fdfdfd; color: #333"><code>IP=127.0.0.1
-curl -X POST http://127.0.0.1:18081/gettransactions
-  -H 'Content-Type: application/json'
-  -d '{
-    "txs_hashes": [
-      "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
-    ]
-  }'
-</code></pre>
+<pre class="center-column">
+  <code>
+    curl -X POST http://127.0.0.1:18081/gettransactions \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "txs_hashes": [
+        "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
+      ]
+    }'
+</code>
+</pre>
 
 <aside class="notice">
 Note: It is recommended to use JSON RPC where such alternatives exist, rather than the following methods. For example, the recommended way to get a node's height is via the JSON RPC methods <a href="#get_info">get_info</a> or <a href="#getlastblockheader">getlastblockheader</a>, rather than <a href="#getheight">getheight</a> below.
@@ -1902,7 +1914,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <blockquote>
 <p>Following is an example of <code>getheight</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/getheight
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/getheight <span class="se">\</span>
   -H <span class="s1">'Content-Type: application/json'</span>
 </code></pre>
 <blockquote>
@@ -1939,8 +1951,8 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <blockquote>
 <p>Example 1: Return transaction information in binary format and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/gettransactions
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/gettransactions <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "txs_hashes": [
       "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
@@ -1959,8 +1971,8 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <p>Example 2: Decode returned transaction information in JSON format and it&#39;s return.
 <strong>Note:</strong> the <code>vout</code> list has been truncated in the displayed return for space considerations.</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/gettransactions
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/gettransactions <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "txs_hashes": [
       "d6e48158472848e6687173a91ae6eebfa3e1d778e65252ee99d7515d63090408"
@@ -2193,8 +2205,8 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <blockquote>
 <p>Following is an example of <code>is_key_image_spent</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/is_key_image_spent
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/is_key_image_spent <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "key_images": [
       "8d1bd8181bf7d857bdb281e0153d84cd55a3fcaa57c3e570f4a49f935850b5e3",
@@ -2248,8 +2260,8 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <blockquote>
 <p>Following is an example of <code>sendrawtransaction</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/sendrawtransaction
-  -H <span class="s1">'Content-Type: application/json'</span>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/sendrawtransaction <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{
     "tx_as_hex":"de6a3…"
   }'</span>
@@ -2294,7 +2306,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <blockquote>
 <p>Following is an example of <code>get_transaction_pool</code> and it&#39;s return:</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/get_transaction_pool
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/get_transaction_pool <span class="se">\</span>
   -H <span class="s1">'Content-Type: application/json'</span>
 </code></pre>
 <blockquote>
@@ -2592,7 +2604,38 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>The stealth public key of the receiver. Whoever owns the private key associated with this key controls this transaction output.</td>
 </tr>
 </tbody></table>
-<h1 id='errors'>Errors</h1>
+<h2 id='stop_daemon'>stop_daemon</h2>
+<blockquote>
+<p>Following is an example of <code>stop_daemon</code> and it&#39;s return:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/stop_daemon <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+ </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OK"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Send a command to the daemon to safely disconnect and shut down.</p>
+<h3 id='inputs-6'>Inputs</h3>
+<p>Inputs: None.</p>
+<h3 id='outputs-6'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>status</td>
+<td>string</td>
+<td>General error code.&quot;OK&quot; means everything looks good.</td>
+</tr>
+</tbody></table>
+<h1 id='wallet-json-rpc-calls'>Wallet JSON RPC Calls</h1><h1 id='errors'>Errors</h1>
 <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Kittn API uses the following error codes:</p>
