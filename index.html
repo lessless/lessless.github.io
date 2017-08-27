@@ -293,6 +293,32 @@
           </li>
           <li>
             <a href="#wallet-json-rpc-calls" class="toc-h1 toc-link" data-title="Wallet JSON RPC Calls">Wallet JSON RPC Calls</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#getbalance" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">getbalance</a>
+                  </li>
+                  <li>
+                    <a href="#getaddress" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">getaddress</a>
+                  </li>
+                  <li>
+                    <a href="#getheight" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">getheight</a>
+                  </li>
+                  <li>
+                    <a href="#transfer" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">transfer</a>
+                  </li>
+                  <li>
+                    <a href="#transfer_split" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">transfer_split</a>
+                  </li>
+                  <li>
+                    <a href="#sweep_dust" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">sweep_dust</a>
+                  </li>
+                  <li>
+                    <a href="#get_payments" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">get_payments</a>
+                  </li>
+                  <li>
+                    <a href="#get_bulk_payments" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">get_bulk_payments</a>
+                  </li>
+              </ul>
           </li>
           <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
@@ -2635,7 +2661,596 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>General error code.&quot;OK&quot; means everything looks good.</td>
 </tr>
 </tbody></table>
-<h1 id='wallet-json-rpc-calls'>Wallet JSON RPC Calls</h1><h1 id='errors'>Errors</h1>
+<h1 id='wallet-json-rpc-calls'>Wallet JSON RPC Calls</h1><h2 id='getbalance'>getbalance</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getbalance"}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">140000000000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"unlocked_balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">50000000000</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Return the wallet&#39;s balance.</p>
+<h3 id='inputs'>Inputs</h3>
+<p>None</p>
+<h3 id='outputs'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>balance</td>
+<td>unsigned int</td>
+<td>The total balance of the current monero-wallet-rpc in session.</td>
+</tr>
+<tr>
+<td>unlocked_balance</td>
+<td>string</td>
+<td>Unlocked funds are those funds that are sufficiently deep enough in the Monero blockchain to be considered safe to spend.</td>
+</tr>
+</tbody></table>
+<h2 id='getaddress'>getaddress</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getaddress"}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"427ZuEhNJQRXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQGaDsaBA"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Return the wallet&#39;s address.</p>
+<h3 id='inputs-2'>Inputs</h3>
+<p>None</p>
+<h3 id='outputs-2'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>The 95-character hex address string of the monero-wallet-rpc in session.</td>
+</tr>
+</tbody></table>
+<h2 id='getheight'>getheight</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getheight"}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"994310"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Returns the wallet&#39;s current block height.</p>
+<h3 id='inputs-3'>Inputs</h3>
+<p>None</p>
+<h3 id='outputs-3'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>height</td>
+<td>string</td>
+<td>; The current monero-wallet-rpc&#39;s blockchain height. If the wallet has been offline for a long time, it may need to catch up with the daemon.</td>
+</tr>
+</tbody></table>
+<h2 id='transfer'>transfer</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"transfer",
+    "params":{
+      "destinations":[
+        {
+          "amount":100000000,
+          "address":"9wNgSYy2F9qPZu7KBjvsFgZLTKE2TZgEpNFbGka9gA5zPmAXS35QzzYaLKJRkYTnzgArGNX7TvSqZC87tBLwtaC5RQgJ8rm"
+        },
+        {
+          "amount":200000000,
+          "address":"9vH5D7Fv47mbpCpdcthcjU34rqiiAYRCh1tYywmhqnEk9iwCE9yppgNCXAyVHG5qJt2kExa42TuhzQfJbmbpeGLkVbg8xit"
+        }
+      ],
+      "mixin":4,
+      "get_tx_key":true
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"fee"</span><span class="p">:</span><span class="mi">48958481211</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tx_hash"</span><span class="p">:</span><span class="s2">"985180f468637bc6d2f72ee054e1e34b8d5097988bb29a2e0cb763e4464db23c"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"tx_key"</span><span class="p">:</span><span class="s2">"8d62e5637f1fcc9a8904057d6bed6c697618507b193e956f77c31ce662b2ee07"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Send monero to a number of recipients.</p>
+<h3 id='inputs-4'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>destinations</td>
+<td>array</td>
+<td>Array of destinations to receive XMR(see below).</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>unsigned int</td>
+<td>Ignored, will be automatically calculated.</td>
+</tr>
+<tr>
+<td>mixin</td>
+<td>unsigned int</td>
+<td>Number of outpouts from the blockchain to mix with (0 means no mixing).</td>
+</tr>
+<tr>
+<td>unlock_time</td>
+<td>unsigned int</td>
+<td>Number of blocks before the monero can be spent (0 to not add a lock).</td>
+</tr>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>(Optional) Random 32-byte/64-character hex string to identify a transaction.</td>
+</tr>
+<tr>
+<td>get_tx_key</td>
+<td>boolean</td>
+<td>(Optional) Return the transaction key after sending.</td>
+</tr>
+</tbody></table>
+
+<p><em><strong><code>destinations[]</code></strong> field structure (transaction inputs list)</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>unsigned int</td>
+<td>Amount to send to each destination, in atomic units.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>Destination public address.</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-4'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fee</td>
+<td>unsigned int</td>
+<td>Integer value of the fee charged for the txn.</td>
+</tr>
+<tr>
+<td>tx_hash</td>
+<td>string</td>
+<td>String for the publically searchable transaction hash</td>
+</tr>
+<tr>
+<td>tx_key</td>
+<td>string</td>
+<td>String for the transaction key if get_tx_key is true, otherwise, blank string.</td>
+</tr>
+</tbody></table>
+<h2 id='transfer_split'>transfer_split</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"transfer_split",
+    "params":{
+      "destinations":[
+        {
+          "amount":100000000,
+          "address":"9wNgSYy2F9qPZu7KBjvsFgZLTKE2TZgEpNFbGka9gA5zPmAXS35QzzYaLKJRkYTnzgArGNX7TvSqZC87tBwtaC5RQgJ8rm"
+        },
+        {
+          "amount":200000000,
+          "address":"9vH5D7Fv47mbpCpdcthcjU34rqiiAYRCh1tYywmhqnEk9iwCE9yppgNCXAyVHG5qJt2kExa42TuhzQfJbmbpeGLkVbg8xit"
+        },
+        {
+          "amount":200000000,
+          "address":"9vC5Q25cR1d3WzKX6dpTaLJaqZyDrtTnfadTmVuB1Wue2tyFGxUhiE4RGa74pEDJv7gSySzcd1Ao6G1nzSaqp78vLfP6MPj"
+        },
+        {
+          "amount":200000000,
+          "address":"A2MSrn49ziBPJBh8ZNEhhbfyLMou6mao4C1F5TLGUatmUnCxZArDYkcbAnVkVEopWVeak2rKDrmc8JpoS7n5dvfN9YDPBTG"
+        },
+        {
+          "amount":200000000,
+          "address":"9tEDyVQ8zgRQbDYiykTdpw5kZ6qWQWcKfExEj9eQshjpGb3sdr3UyWE2AHWzUGzJjaH9HN1DdGBdyQQ4AqGMc7rr5xYwZWW"
+        }
+      ],
+      "mixin":4,
+      "get_tx_key":true,
+      "new_algorithm":true
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"fee_list"</span><span class="p">:[</span><span class="w">
+      </span><span class="mi">97916962422</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"tx_hash_list"</span><span class="p">:[</span><span class="w">
+      </span><span class="s2">"c5c389846e701c27aaf1f7ab8b9dc457b471fcea5bc9710e8020d51275afbc54"</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Same as transfer, but can split into more than one tx if necessary.</p>
+<h3 id='inputs-5'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>destinations</td>
+<td>array</td>
+<td>Array of destinations to receive XMR(see below).</td>
+</tr>
+<tr>
+<td>fee</td>
+<td>unsigned int</td>
+<td>Ignored, will be automatically calculated.</td>
+</tr>
+<tr>
+<td>mixin</td>
+<td>unsigned int</td>
+<td>Number of outpouts from the blockchain to mix with (0 means no mixing).</td>
+</tr>
+<tr>
+<td>unlock_time</td>
+<td>unsigned int</td>
+<td>Number of blocks before the monero can be spent (0 to not add a lock).</td>
+</tr>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>(Optional) Random 32-byte/64-character hex string to identify a transaction.</td>
+</tr>
+<tr>
+<td>get_tx_key</td>
+<td>boolean</td>
+<td>(Optional) Return the transaction key after sending.</td>
+</tr>
+<tr>
+<td>new_algorithm</td>
+<td>boolean</td>
+<td>True to use the new transaction construction algorithm, defaults to false.</td>
+</tr>
+</tbody></table>
+
+<p><em><strong><code>destinations[]</code></strong> field structure (transaction inputs list)</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>unsigned int</td>
+<td>Amount to send to each destination, in atomic units.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>Destination public address.</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-5'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>fee_list</td>
+<td>array of unsigned int</td>
+<td>Integer value of the fee charged for the txn.</td>
+</tr>
+<tr>
+<td>tx_hash_list</td>
+<td>array of string</td>
+<td>String for the publically searchable transaction hash</td>
+</tr>
+</tbody></table>
+<h2 id='sweep_dust'>sweep_dust</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "sweep_dust"}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this (In this example, <code>sweep_dust</code> returns an error due to insufficient funds to sweep):</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"error"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"code"</span><span class="p">:</span><span class="mi">-4</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="s2">"not enough money"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Send all dust outputs back to the wallet&#39;s, to make them easier to spend (and mix).</p>
+<h3 id='inputs-6'>Inputs</h3>
+<p>None</p>
+<h3 id='outputs-6'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>tx_hash_list</td>
+<td>array of string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id='get_payments'>get_payments</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"get_payments",
+    "params":{
+      "payment_id":"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"payments"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"amount"</span><span class="p">:</span><span class="mi">10350000000000</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"block_height"</span><span class="p">:</span><span class="mi">994327</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"payment_id"</span><span class="p">:</span><span class="s2">"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"tx_hash"</span><span class="p">:</span><span class="s2">"c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unlock_time"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Get a list of incoming payments using a given payment id.</p>
+<h3 id='inputs-7'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-7'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payments</td>
+<td>array</td>
+<td>(see below).</td>
+</tr>
+</tbody></table>
+
+<p><em><strong><code>payments[]</code></strong> field structure</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>tx_hash</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+<tr>
+<td>block_height</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+<tr>
+<td>unlock_time</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id='get_bulk_payments'>get_bulk_payments</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+  "jsonrpc":"2.0",
+  "id":"0",
+  "method":"get_bulk_payments",
+  "params":{
+    "payment_ids":[
+      "4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"
+    ],
+    "min_block_height":990000
+  }
+}'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"payments"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"amount"</span><span class="p">:</span><span class="mi">10350000000000</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"block_height"</span><span class="p">:</span><span class="mi">994327</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"payment_id"</span><span class="p">:</span><span class="s2">"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"tx_hash"</span><span class="p">:</span><span class="s2">"c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"unlock_time"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Get a list of incoming payments using a given payment id, or a list of payments ids, from a given height. This method is the preferred method over <a href="#get_payments">get_payments</a> because it has the same functionality but is more extendable. Either is fine for looking up transactions by a single payment ID.</p>
+<h3 id='inputs-8'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payment_ids</td>
+<td>array of string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>min_block_height</td>
+<td>unsigned int</td>
+<td>The block height at which to start looking for payments.</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-8'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payments</td>
+<td>array</td>
+<td>(see below).</td>
+</tr>
+</tbody></table>
+
+<p><em><strong><code>payments[]</code></strong> field structure</em></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>tx_hash</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+<tr>
+<td>block_height</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+<tr>
+<td>unlock_time</td>
+<td>unsigned int</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h1 id='errors'>Errors</h1>
 <aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
 
 <p>The Kittn API uses the following error codes:</p>
