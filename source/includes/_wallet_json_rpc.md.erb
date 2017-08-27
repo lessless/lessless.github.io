@@ -1,1 +1,394 @@
 # Wallet JSON RPC Calls
+
+## getbalance
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "getbalance"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "balance": 140000000000,
+      "unlocked_balance": 50000000000
+    }
+}
+```
+
+Return the wallet's balance.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+balance  |  unsigned int | The total balance of the current monero-wallet-rpc in session.
+unlocked_balance | string | Unlocked funds are those funds that are sufficiently deep enough in the Monero blockchain to be considered safe to spend.
+
+## getaddress
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "getaddress"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "address": "427ZuEhNJQRXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQGaDsaBA"
+    }
+}
+```
+
+Return the wallet's address.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+address  |  string |  The 95-character hex address string of the monero-wallet-rpc in session.
+
+## getheight
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "getheight"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "address": "994310"
+    }
+}
+```
+
+Returns the wallet's current block height.
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+height  |  string | ; The current monero-wallet-rpc's blockchain height. If the wallet has been offline for a long time, it may need to catch up with the daemon.
+
+
+## transfer
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"transfer",
+    "params":{
+      "destinations":[
+        {
+          "amount":100000000,
+          "address":"9wNgSYy2F9qPZu7KBjvsFgZLTKE2TZgEpNFbGka9gA5zPmAXS35QzzYaLKJRkYTnzgArGNX7TvSqZC87tBLwtaC5RQgJ8rm"
+        },
+        {
+          "amount":200000000,
+          "address":"9vH5D7Fv47mbpCpdcthcjU34rqiiAYRCh1tYywmhqnEk9iwCE9yppgNCXAyVHG5qJt2kExa42TuhzQfJbmbpeGLkVbg8xit"
+        }
+      ],
+      "mixin":4,
+      "get_tx_key":true
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "fee":48958481211,
+    "tx_hash":"985180f468637bc6d2f72ee054e1e34b8d5097988bb29a2e0cb763e4464db23c",
+    "tx_key":"8d62e5637f1fcc9a8904057d6bed6c697618507b193e956f77c31ce662b2ee07"
+  }
+}
+```
+
+Send monero to a number of recipients.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+destinations  | array | Array of destinations to receive XMR(see below).
+fee  | unsigned int | Ignored, will be automatically calculated.
+mixin  | unsigned int | Number of outpouts from the blockchain to mix with (0 means no mixing).
+unlock_time  | unsigned int | Number of blocks before the monero can be spent (0 to not add a lock).
+payment_id  | string | (Optional) Random 32-byte/64-character hex string to identify a transaction.
+get_tx_key  | boolean | (Optional) Return the transaction key after sending.
+
+_**`destinations[]`** field structure (transaction inputs list)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount  | unsigned int | Amount to send to each destination, in atomic units.
+address  | string | Destination public address.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+fee  | unsigned int | Integer value of the fee charged for the txn.
+tx_hash  | string | String for the publically searchable transaction hash
+tx_key  | string | String for the transaction key if get_tx_key is true, otherwise, blank string.
+
+## transfer_split
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"transfer_split",
+    "params":{
+      "destinations":[
+        {
+          "amount":100000000,
+          "address":"9wNgSYy2F9qPZu7KBjvsFgZLTKE2TZgEpNFbGka9gA5zPmAXS35QzzYaLKJRkYTnzgArGNX7TvSqZC87tBwtaC5RQgJ8rm"
+        },
+        {
+          "amount":200000000,
+          "address":"9vH5D7Fv47mbpCpdcthcjU34rqiiAYRCh1tYywmhqnEk9iwCE9yppgNCXAyVHG5qJt2kExa42TuhzQfJbmbpeGLkVbg8xit"
+        },
+        {
+          "amount":200000000,
+          "address":"9vC5Q25cR1d3WzKX6dpTaLJaqZyDrtTnfadTmVuB1Wue2tyFGxUhiE4RGa74pEDJv7gSySzcd1Ao6G1nzSaqp78vLfP6MPj"
+        },
+        {
+          "amount":200000000,
+          "address":"A2MSrn49ziBPJBh8ZNEhhbfyLMou6mao4C1F5TLGUatmUnCxZArDYkcbAnVkVEopWVeak2rKDrmc8JpoS7n5dvfN9YDPBTG"
+        },
+        {
+          "amount":200000000,
+          "address":"9tEDyVQ8zgRQbDYiykTdpw5kZ6qWQWcKfExEj9eQshjpGb3sdr3UyWE2AHWzUGzJjaH9HN1DdGBdyQQ4AqGMc7rr5xYwZWW"
+        }
+      ],
+      "mixin":4,
+      "get_tx_key":true,
+      "new_algorithm":true
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "fee_list":[
+      97916962422
+    ],
+    "tx_hash_list":[
+      "c5c389846e701c27aaf1f7ab8b9dc457b471fcea5bc9710e8020d51275afbc54"
+    ]
+  }
+}
+```
+
+Same as transfer, but can split into more than one tx if necessary.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+destinations  | array | Array of destinations to receive XMR(see below).
+fee  | unsigned int | Ignored, will be automatically calculated.
+mixin  | unsigned int | Number of outpouts from the blockchain to mix with (0 means no mixing).
+unlock_time  | unsigned int | Number of blocks before the monero can be spent (0 to not add a lock).
+payment_id  | string | (Optional) Random 32-byte/64-character hex string to identify a transaction.
+get_tx_key  | boolean | (Optional) Return the transaction key after sending.
+new_algorithm  | boolean | True to use the new transaction construction algorithm, defaults to false.
+
+_**`destinations[]`** field structure (transaction inputs list)_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount  | unsigned int | Amount to send to each destination, in atomic units.
+address  | string | Destination public address.
+
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+fee_list  | array of unsigned int | Integer value of the fee charged for the txn.
+tx_hash_list  | array of string | String for the publically searchable transaction hash
+
+## sweep_dust
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "sweep_dust"}'
+```
+
+> The above command returns JSON structured like this (In this example, `sweep_dust` returns an error due to insufficient funds to sweep):
+
+```json
+{
+  "error":{
+    "code":-4,
+    "message":"not enough money"
+  },
+  "id":"0",
+  "jsonrpc":"2.0"
+}
+```
+
+Send all dust outputs back to the wallet's, to make them easier to spend (and mix).
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+tx_hash_list  | array of string | -
+
+
+## get_payments
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"get_payments",
+    "params":{
+      "payment_id":"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "payments":[
+      {
+        "amount":10350000000000,
+        "block_height":994327,
+        "payment_id":"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030",
+        "tx_hash":"c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1",
+        "unlock_time":0
+      }
+    ]
+  }
+}
+```
+
+Get a list of incoming payments using a given payment id.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+payment_id  | string | -
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+payments  | array | (see below).
+
+<%= partial "includes/params_objects/payment.md"%>
+
+## get_bulk_payments
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "jsonrpc":"2.0",
+  "id":"0",
+  "method":"get_bulk_payments",
+  "params":{
+    "payment_ids":[
+      "4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030"
+    ],
+    "min_block_height":990000
+  }
+}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "payments":[
+      {
+        "amount":10350000000000,
+        "block_height":994327,
+        "payment_id":"4279257e0a20608e25dba8744949c9e1caff4fcdafc7d5362ecf14225f3d9030",
+        "tx_hash":"c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1",
+        "unlock_time":0
+      }
+    ]
+  }
+}
+```
+
+Get a list of incoming payments using a given payment id, or a list of payments ids, from a given height. This method is the preferred method over [get_payments](#get_payments) because it has the same functionality but is more extendable. Either is fine for looking up transactions by a single payment ID.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+payment_ids  | array of string | -
+min_block_height |unsigned int | The block height at which to start looking for payments.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+payments  | array | (see below).
+
+<%= partial "includes/params_objects/payment.md"%>
