@@ -11,12 +11,12 @@ are described in hierarchical order, one after another.
 Let's take `getbans` call for example. The nested version of its response would be a 2-level deep list:
 
 - `bans` - List of banned nodes:
-- `ip` - unsigned int; Banned IP address, in Int format.
+  - `ip` - unsigned int; Banned IP address, in Int format.
   - `seconds` - unsigned int; Local Unix time that IP is banned until.
-  - `status` - string; General RPC error code. "OK" means everything looks good.
+- `status` - string; General RPC error code. "OK" means everything looks good.
 
 
-Instead, a `bans` list item description will be given right after after the root object description
+Instead, an `ip` list item description will be given right after after the root object description
 
 Parameter | Type | Description
 --------- | ------- | -----------
@@ -30,6 +30,8 @@ Parameter | Type | Description
 ip | unsigned int | Banned IP address, in Int format.
 seconds | unsigned int |   Local Unix time that IP is banned until.
 
+
+`[]` in the in the `bans[]` filed name means a list of objects under the `bans` key(primitive data types doesn't contrusct nested objects).
 
 If objects are more than 2 levels deep, than `.`(dot) is used to denote parent - children relationship. For example: `miner_tx.vout[].target` (See `getblock` call), what reads as _`target` filed in the each entry of the `vout` array under the `miner_tx` key_.
 
