@@ -392,3 +392,233 @@ Parameter | Type | Description
 payments  | array | (see below).
 
 <%= partial "includes/params_objects/payment.md"%>
+
+## get_transfers
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"get_transfers",
+    "params":{
+      "pool":true
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "pool":[
+      {
+        "amount":500000000000,
+        "fee":0,
+        "height":0,
+        "note":"",
+        "payment_id":"758d9b225fda7b7f",
+        "timestamp":1488312467,
+        "txid":"da7301d5423efa09fabacb720002e978d114ff2db6a1546f8b820644a1b96208",
+        "type":"pool"
+      }
+    ]
+  }
+}
+```
+
+Returns a list of transfers.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+in  |  boolean | -
+out  |  boolean | -
+pending  |  boolean | -
+failed  |  boolean | -
+pool  |  boolean | -
+filter_by_height  |  boolean | -
+min_height  |  unsigned int | -
+max_height  |  unsigned int | -
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+in  |  array | List of transfers(see below).
+out | array | List of transfers(see below).
+pending | array | List of transfers(see below).
+failed | array | List of transfers(see below).
+pool | array | List of transfers(see below).
+
+_**`in`**/**`out`**/**`pending`**/**`failed`**/**`pool`** fields structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+txid | string| -
+payment_id | string| -
+height | unsigned int| -
+timestamp | unsigned int| -
+amount | unsigned int| -
+fee | unsigned int| -
+note | string| -
+destinations | array| -
+type | string| -
+
+
+## incoming_transfers
+
+> Example (Return `all` transaction types):
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"incoming_transfers",
+    "params":{
+      "transfer_type":"all"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "transfers":[
+      {
+        "amount":10000000000000,
+        "global_index":711506,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      },
+      {
+        "amount":300000000000,
+        "global_index":794232,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      },
+      {
+        "amount":50000000000,
+        "global_index":213659,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      }
+    ]
+  }
+}
+```
+
+> Example (Return `available` transaction types):
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"incoming_transfers",
+    "params":{
+      "transfer_type":"available"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+    "transfers":[
+      {
+        "amount":10000000000000,
+        "global_index":711506,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      },
+      {
+        "amount":300000000000,
+        "global_index":794232,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      },
+      {
+        "amount":50000000000,
+        "global_index":213659,
+        "spent":false,
+        "tx_hash":"<c391089f5b1b02067acc15294e3629a463412af1f1ed0f354113dd4467e4f6c1>",
+        "tx_size":5870
+      }
+    ]
+  }
+}
+```
+
+> Example (Return `unavailable` transaction. Note that this particular example returns 0 unavailable transactions):
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"incoming_transfers",
+    "params":{
+      "transfer_type":"available"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":"0",
+  "jsonrpc":"2.0",
+  "result":{
+
+  }
+}
+```
+Return a list of incoming transfers to the wallet.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+transfer_type  |  string | <ul><li><code>all</code> all the transfers</li><li><code>available</code> only transfers which are not yet spent</li><li><code>unavailable</code>only transfers which are already spent.</li></ul>
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+transfers  |  array | (see below).
+
+_**`transfers[]`** fields structure_
+
+Parameter | Type | Description
+--------- | ------- | -----------
+amount | unsigned int| -
+spent | boolean| -
+global_index | unsigned int| Mostly internal use, can be ignored by most users.
+tx_hash |string| Several incoming transfers may share the same hash if they were in the same transaction.
+tx_size | unsigned int| -
+
+
