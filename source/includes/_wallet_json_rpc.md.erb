@@ -621,4 +621,334 @@ global_index | unsigned int| Mostly internal use, can be ignored by most users.
 tx_hash |string| Several incoming transfers may share the same hash if they were in the same transaction.
 tx_size | unsigned int| -
 
+## query_key
 
+> Example (Query view key):
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"query_key",
+    "params":{
+      "key_type":"view_key"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "key": "7e341d..."
+    }
+}
+```
+
+> Example (Query mnemonic key):
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"query_key",
+    "params":{
+      "key_type":"mnemonic"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "key": "adapt adapt nostril..."
+    }
+}
+```
+
+Return the spend or view private key.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key_type | string | Which key to retrieve: "mnemonic" - the mnemonic seed (older wallets do not have one) OR "view_key" - the view key.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+key | string | The view key will be hex encoded, while the mnemonic will be a string of words.
+
+
+## make_integrated_address
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "make_integrated_address",
+    "params": {
+      "payment_id": ""
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "integrated_address": "4BpEv3WrufwXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQQ8H2RRJveAtUeiFs6J"
+    }
+}
+```
+
+Make an integrated address from the wallet address and a payment id.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+payment_id | string | Hex encoded; can be empty, in which case a random payment id is generated.
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+integrated_address | string | -
+
+## split_integrated_address
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "split_integrated_address",
+    "params": {
+      "integrated_address": "4BpEv3WrufwXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQQ8H2RRJveAtUeiFs6J"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+      "payment_id": "<420fa29b2d9a49f5>",
+      "standard_address": "427ZuEhNJQRXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQGaDsaBA"
+    }
+}
+```
+
+Retrieve the standard address and payment id corresponding to an integrated address.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+integrated_address | string | -
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+standard_address | string | -
+payment | string | Hex encoded.
+
+
+## stop_wallet
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "stop_wallet"
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result": {
+    }
+}
+```
+
+Retrieve the standard address and payment id corresponding to an integrated address.
+
+### Inputs
+
+None
+
+### Outputs
+
+None
+
+
+## make_uri
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_uri",
+    "params":{
+      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
+      "amount":10,
+      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "tx_description":"Testing out the make_uri function.",
+      "recipient_name":"Monero Project donation address"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":0,
+  "jsonrpc":"2.0",
+  "result":{
+    "uri":"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&tx_amount=0.000000000010&recipient_name=Monero%20Project%20donation%20address&tx_description=Testing%20out%20the%20make_uri%20function."
+  }
+}
+```
+
+Create a payment URI using the official URI spec.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+address | string |  wallet address string
+amount (optional)  | - |  the integer amount to receive, in **atomic** units
+payment_id (optional)  | - |  16 or 64 character hexadecimal payment id string
+recipient_name (optional)  | - | string name of the payment recipient
+tx_description (optional)  | - | string describing the reason for the tx
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+uri | string | a string containing all the payment input information as a properly formatted payment URI
+
+## make_uri
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_uri",
+    "params":{
+      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
+      "amount":10,
+      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "tx_description":"Testing out the make_uri function.",
+      "recipient_name":"Monero Project donation address"
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":0,
+  "jsonrpc":"2.0",
+  "result":{
+    "uri":"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&tx_amount=0.000000000010&recipient_name=Monero%20Project%20donation%20address&tx_description=Testing%20out%20the%20make_uri%20function."
+  }
+}
+```
+
+Create a payment URI using the official URI spec.
+
+### Inputs
+
+<%= partial "includes/params_objects/payment_uri_json.md.erb", locals: {with_optional_params: true} %>
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+uri | string | a string containing all the payment input information as a properly formatted payment URI
+
+## parse_uri
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"parse_uri",
+    "params":{
+      "uri":"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&tx_amount=0.000000000010&recipient_name=Monero%20Project%20donation%20address&tx_description=Testing%20out%20the%20make_uri%20function."
+    }
+  }'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id":0,
+  "jsonrpc":"2.0",
+  "result":{
+    "uri":{
+      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
+      "amount":10,
+      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "recipient_name":"Monero Project donation address",
+      "tx_description":"Testing out the make_uri function."
+    }
+  }
+}
+```
+
+Parse a payment URI to get payment information.
+
+### Inputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+uri | string | a string containing all the payment input information as a properly formatted payment URI
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+uri | object |  JSON object containing payment information(see below).
+
+_**`uri`** field structure_
+<%= partial "includes/params_objects/payment_uri_json.md.erb", locals: {with_optional_params: false} %>
