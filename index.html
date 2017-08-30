@@ -222,9 +222,6 @@
             <a href="#introduction" class="toc-h1 toc-link" data-title="Introduction">Introduction</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
-          </li>
-          <li>
             <a href="#daemon-json-rpc-calls" class="toc-h1 toc-link" data-title="Daemon JSON RPC Calls">Daemon JSON RPC Calls</a>
               <ul class="toc-list-h2">
                   <li>
@@ -295,6 +292,9 @@
             <a href="#wallet-json-rpc-calls" class="toc-h1 toc-link" data-title="Wallet JSON RPC Calls">Wallet JSON RPC Calls</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#authentication" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">Authentication</a>
+                  </li>
+                  <li>
                     <a href="#getbalance" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">getbalance</a>
                   </li>
                   <li>
@@ -324,10 +324,28 @@
                   <li>
                     <a href="#incoming_transfers" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">incoming_transfers</a>
                   </li>
+                  <li>
+                    <a href="#query_key" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">query_key</a>
+                  </li>
+                  <li>
+                    <a href="#make_integrated_address" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">make_integrated_address</a>
+                  </li>
+                  <li>
+                    <a href="#split_integrated_address" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">split_integrated_address</a>
+                  </li>
+                  <li>
+                    <a href="#stop_wallet" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">stop_wallet</a>
+                  </li>
+                  <li>
+                    <a href="#make_uri" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">make_uri</a>
+                  </li>
+                  <li>
+                    <a href="#make_uri-2" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">make_uri</a>
+                  </li>
+                  <li>
+                    <a href="#parse_uri" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">parse_uri</a>
+                  </li>
               </ul>
-          </li>
-          <li>
-            <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </div>
         <ul class="toc-footer">
@@ -345,43 +363,6 @@
 <aside class="notice">
 Note: "atomic units" refer to the smallest fraction of 1 XMR according to the monerod implementation. <strong>1 XMR = 1e12 atomic units</strong>.
 </aside>
-<h1 id='authentication'>Authentication</h1>
-<p>The program monero-wallet-rpc replaced the rpc interface that was in simplewallet and then monero-wallet-cli.</p>
-
-<p>All monero-wallet-rpc methods use the same JSON RPC interface.</p>
-
-<pre class="center-column" >
-  <code>
-  curl -X POST http://127.0.0.1:18082/json_rpc \
-    -H 'Content-Type: application/json' \
-    -d '{
-      "jsonrpc":"2.0",
-      "id":"0",
-      "method":"make_integrated_address",
-      "params":{
-        "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-      }
-    }'
-  </code>
-</pre>
-
-<p>If the monero-wallet-rpc was executed with the <code>--rpc-login</code> argument as <code>username:password</code>, then follow this example:</p>
-
-<pre class="center-column" >
-  <code>
-    curl -X POST http://127.0.0.1:18082/json_rpc \
-      -u username:password --digest \
-      -H 'Content-Type: application/json' \
-      -d '{
-        "jsonrpc":"2.0",
-        "id":"0",
-        "method":"make_integrated_address",
-        "params":{
-          "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
-        }
-      }'
-  </code>
-</pre>
 <h1 id='daemon-json-rpc-calls'>Daemon JSON RPC Calls</h1><h2 id='getblockcount'>getblockcount</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18081/json_rpc <span class="se">\</span>
   -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getblockcount"}'</span>
@@ -2667,7 +2648,44 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>General error code.&quot;OK&quot; means everything looks good.</td>
 </tr>
 </tbody></table>
-<h1 id='wallet-json-rpc-calls'>Wallet JSON RPC Calls</h1><h2 id='getbalance'>getbalance</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+<h1 id='wallet-json-rpc-calls'>Wallet JSON RPC Calls</h1><h2 id='authentication'>Authentication</h2>
+<p>This is a list of the monero-wallet-rpc calls, their inputs and outputs, and examples of each. The program monero-wallet-rpc replaced the rpc interface that was in simplewallet and then monero-wallet-cli.</p>
+
+<p>All monero-wallet-rpc methods use the same JSON RPC interface.</p>
+
+<pre class="center-column" >
+  <code>
+  curl -X POST http://127.0.0.1:18082/json_rpc \
+    -H 'Content-Type: application/json' \
+    -d '{
+      "jsonrpc":"2.0",
+      "id":"0",
+      "method":"make_integrated_address",
+      "params":{
+        "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+      }
+    }'
+  </code>
+</pre>
+
+<p>If the monero-wallet-rpc was executed with the <code>--rpc-login</code> argument as <code>username:password</code>, then follow this example:</p>
+
+<pre class="center-column" >
+  <code>
+    curl -X POST http://127.0.0.1:18082/json_rpc \
+      -u username:password --digest \
+      -H 'Content-Type: application/json' \
+      -d '{
+        "jsonrpc":"2.0",
+        "id":"0",
+        "method":"make_integrated_address",
+        "params":{
+          "payment_id":"1234567890123456789012345678900012345678901234567890123456789000"
+        }
+      }'
+  </code>
+</pre>
+<h2 id='getbalance'>getbalance</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
   -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
   -d <span class="s1">'{"jsonrpc": "2.0", "id": "0", "method": "getbalance"}'</span>
 </code></pre>
@@ -3614,62 +3632,459 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>-</td>
 </tr>
 </tbody></table>
-<h1 id='errors'>Errors</h1>
-<aside class="notice">This error section is stored in a separate file in `includes/_errors.md`. Slate allows you to optionally separate out your docs into many files...just save them to the `includes` folder and add them to the top of your `index.md`'s frontmatter. Files are included in the order listed.</aside>
-
-<p>The Kittn API uses the following error codes:</p>
-
+<h2 id='query_key'>query_key</h2>
+<blockquote>
+<p>Example (Query view key):</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"query_key",
+    "params":{
+      "key_type":"view_key"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7e341d..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Example (Query mnemonic key):</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"query_key",
+    "params":{
+      "key_type":"mnemonic"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"adapt adapt nostril..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Return the spend or view private key.</p>
+<h3 id='inputs-11'>Inputs</h3>
 <table><thead>
 <tr>
-<th>Error Code</th>
-<th>Meaning</th>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>400</td>
-<td>Bad Request -- Your request sucks.</td>
-</tr>
-<tr>
-<td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
-</tr>
-<tr>
-<td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
-</tr>
-<tr>
-<td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
-</tr>
-<tr>
-<td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
-</tr>
-<tr>
-<td>503</td>
-<td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+<td>key_type</td>
+<td>string</td>
+<td>Which key to retrieve: &quot;mnemonic&quot; - the mnemonic seed (older wallets do not have one) OR &quot;view_key&quot; - the view key.</td>
 </tr>
 </tbody></table>
+<h3 id='outputs-11'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>key</td>
+<td>string</td>
+<td>The view key will be hex encoded, while the mnemonic will be a string of words.</td>
+</tr>
+</tbody></table>
+<h2 id='make_integrated_address'>make_integrated_address</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "make_integrated_address",
+    "params": {
+      "payment_id": ""
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"integrated_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4BpEv3WrufwXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQQ8H2RRJveAtUeiFs6J"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Make an integrated address from the wallet address and a payment id.</p>
+<h3 id='inputs-12'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>Hex encoded; can be empty, in which case a random payment id is generated.</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-12'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>integrated_address</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h2 id='split_integrated_address'>split_integrated_address</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "split_integrated_address",
+    "params": {
+      "integrated_address": "4BpEv3WrufwXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQQ8H2RRJveAtUeiFs6J"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"payment_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;420fa29b2d9a49f5&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"standard_address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"427ZuEhNJQRXoyJAeEoBaNW56ScQaLXyyQWgxeRL9KgAUhVzkvfiELZV7fCPBuuB2CGuJiWFQjhnhhwiH1FsHYGQGaDsaBA"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Retrieve the standard address and payment id corresponding to an integrated address.</p>
+<h3 id='inputs-13'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>integrated_address</td>
+<td>string</td>
+<td>-</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-13'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>standard_address</td>
+<td>string</td>
+<td>-</td>
+</tr>
+<tr>
+<td>payment</td>
+<td>string</td>
+<td>Hex encoded.</td>
+</tr>
+</tbody></table>
+<h2 id='stop_wallet'>stop_wallet</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc": "2.0",
+    "id": "0",
+    "method": "stop_wallet"
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Retrieve the standard address and payment id corresponding to an integrated address.</p>
+<h3 id='inputs-14'>Inputs</h3>
+<p>None</p>
+<h3 id='outputs-14'>Outputs</h3>
+<p>None</p>
+<h2 id='make_uri'>make_uri</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_uri",
+    "params":{
+      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
+      "amount":10,
+      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "tx_description":"Testing out the make_uri function.",
+      "recipient_name":"Monero Project donation address"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"uri"</span><span class="p">:</span><span class="s2">"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&amp;tx_amount=0.000000000010&amp;recipient_name=Monero%20Project%20donation%20address&amp;tx_description=Testing%20out%20the%20make_uri%20function."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Create a payment URI using the official URI spec.</p>
+<h3 id='inputs-15'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>wallet address string</td>
+</tr>
+<tr>
+<td>amount (optional)</td>
+<td>-</td>
+<td>the integer amount to receive, in <strong>atomic</strong> units</td>
+</tr>
+<tr>
+<td>payment_id (optional)</td>
+<td>-</td>
+<td>16 or 64 character hexadecimal payment id string</td>
+</tr>
+<tr>
+<td>recipient_name (optional)</td>
+<td>-</td>
+<td>string name of the payment recipient</td>
+</tr>
+<tr>
+<td>tx_description (optional)</td>
+<td>-</td>
+<td>string describing the reason for the tx</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-15'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>a string containing all the payment input information as a properly formatted payment URI</td>
+</tr>
+</tbody></table>
+<h2 id='make_uri-2'>make_uri</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"make_uri",
+    "params":{
+      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
+      "amount":10,
+      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "tx_description":"Testing out the make_uri function.",
+      "recipient_name":"Monero Project donation address"
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"uri"</span><span class="p">:</span><span class="s2">"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&amp;tx_amount=0.000000000010&amp;recipient_name=Monero%20Project%20donation%20address&amp;tx_description=Testing%20out%20the%20make_uri%20function."</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Create a payment URI using the official URI spec.</p>
+<h3 id='inputs-16'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>wallet address string</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>-</td>
+<td>(Optional)  the integer amount to receive, in <strong>atomic</strong> units</td>
+</tr>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>(Optional)  16 or 64 character hexadecimal payment id</td>
+</tr>
+<tr>
+<td>recipient_name</td>
+<td>string</td>
+<td>(Optional)  name of the payment recipient</td>
+</tr>
+<tr>
+<td>tx_description</td>
+<td>string</td>
+<td>(Optional)  tx reason description</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-16'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>a string containing all the payment input information as a properly formatted payment URI</td>
+</tr>
+</tbody></table>
+<h2 id='parse_uri'>parse_uri</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
+  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "jsonrpc":"2.0",
+    "id":"0",
+    "method":"parse_uri",
+    "params":{
+      "uri":"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&amp;tx_amount=0.000000000010&amp;recipient_name=Monero%20Project%20donation%20address&amp;tx_description=Testing%20out%20the%20make_uri%20function."
+    }
+  }'</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
+    </span><span class="s2">"uri"</span><span class="p">:{</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="s2">"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"amount"</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"payment_id"</span><span class="p">:</span><span class="s2">"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"recipient_name"</span><span class="p">:</span><span class="s2">"Monero Project donation address"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"tx_description"</span><span class="p">:</span><span class="s2">"Testing out the make_uri function."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Parse a payment URI to get payment information.</p>
+<h3 id='inputs-17'>Inputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>uri</td>
+<td>string</td>
+<td>a string containing all the payment input information as a properly formatted payment URI</td>
+</tr>
+</tbody></table>
+<h3 id='outputs-17'>Outputs</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>uri</td>
+<td>object</td>
+<td>JSON object containing payment information(see below).</td>
+</tr>
+</tbody></table>
+
+<p><em><strong><code>uri</code></strong> field structure</em>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>wallet address string</td>
+</tr>
+<tr>
+<td>amount</td>
+<td>-</td>
+<td>the integer amount to receive, in <strong>atomic</strong> units</td>
+</tr>
+<tr>
+<td>payment_id</td>
+<td>string</td>
+<td>16 or 64 character hexadecimal payment id</td>
+</tr>
+<tr>
+<td>recipient_name</td>
+<td>string</td>
+<td>name of the payment recipient</td>
+</tr>
+<tr>
+<td>tx_description</td>
+<td>string</td>
+<td>tx reason description</td>
+</tr>
+</tbody></table></p>
 
       </div>
       <div class="dark-box">
