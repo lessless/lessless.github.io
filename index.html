@@ -340,9 +340,6 @@
                     <a href="#make_uri" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">make_uri</a>
                   </li>
                   <li>
-                    <a href="#make_uri-2" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">make_uri</a>
-                  </li>
-                  <li>
                     <a href="#parse_uri" class="toc-h2 toc-link" data-title="Wallet JSON RPC Calls">parse_uri</a>
                   </li>
               </ul>
@@ -3838,7 +3835,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>Retrieve the standard address and payment id corresponding to an integrated address.</p>
+<p>Stops the wallet, storing the current state.</p>
 <h3 id='inputs-14'>Inputs</h3>
 <p>None</p>
 <h3 id='outputs-14'>Outputs</h3>
@@ -3884,81 +3881,6 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>wallet address string</td>
 </tr>
 <tr>
-<td>amount (optional)</td>
-<td>-</td>
-<td>the integer amount to receive, in <strong>atomic</strong> units</td>
-</tr>
-<tr>
-<td>payment_id (optional)</td>
-<td>-</td>
-<td>16 or 64 character hexadecimal payment id string</td>
-</tr>
-<tr>
-<td>recipient_name (optional)</td>
-<td>-</td>
-<td>string name of the payment recipient</td>
-</tr>
-<tr>
-<td>tx_description (optional)</td>
-<td>-</td>
-<td>string describing the reason for the tx</td>
-</tr>
-</tbody></table>
-<h3 id='outputs-15'>Outputs</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>uri</td>
-<td>string</td>
-<td>a string containing all the payment input information as a properly formatted payment URI</td>
-</tr>
-</tbody></table>
-<h2 id='make_uri-2'>make_uri</h2><pre class="highlight shell tab-shell"><code>curl -X POST http://127.0.0.1:18082/json_rpc <span class="se">\</span>
-  -H <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
-  -d <span class="s1">'{
-    "jsonrpc":"2.0",
-    "id":"0",
-    "method":"make_uri",
-    "params":{
-      "address":"44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A",
-      "amount":10,
-      "payment_id":"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
-      "tx_description":"Testing out the make_uri function.",
-      "recipient_name":"Monero Project donation address"
-    }
-  }'</span>
-</code></pre>
-<blockquote>
-<p>The above command returns JSON structured like this:</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"jsonrpc"</span><span class="p">:</span><span class="s2">"2.0"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"result"</span><span class="p">:{</span><span class="w">
-    </span><span class="s2">"uri"</span><span class="p">:</span><span class="s2">"monero:44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A?tx_payment_id=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef&amp;tx_amount=0.000000000010&amp;recipient_name=Monero%20Project%20donation%20address&amp;tx_description=Testing%20out%20the%20make_uri%20function."</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-<p>Create a payment URI using the official URI spec.</p>
-<h3 id='inputs-16'>Inputs</h3>
-<table><thead>
-<tr>
-<th>Parameter</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>address</td>
-<td>string</td>
-<td>wallet address string</td>
-</tr>
-<tr>
 <td>amount</td>
 <td>-</td>
 <td>(Optional)  the integer amount to receive, in <strong>atomic</strong> units</td>
@@ -3979,7 +3901,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>(Optional)  tx reason description</td>
 </tr>
 </tbody></table>
-<h3 id='outputs-16'>Outputs</h3>
+<h3 id='outputs-15'>Outputs</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4022,7 +3944,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>Parse a payment URI to get payment information.</p>
-<h3 id='inputs-17'>Inputs</h3>
+<h3 id='inputs-16'>Inputs</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -4036,7 +3958,7 @@ Note: It is recommended to use JSON RPC where such alternatives exist, rather th
 <td>a string containing all the payment input information as a properly formatted payment URI</td>
 </tr>
 </tbody></table>
-<h3 id='outputs-17'>Outputs</h3>
+<h3 id='outputs-16'>Outputs</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
