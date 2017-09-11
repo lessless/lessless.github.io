@@ -906,3 +906,37 @@ Parameter | Type | Description
 --------- | ------- | -----------
 ip | unsigned int | Banned IP address, in Int format.
 seconds | unsigned int |   Local Unix time that IP is banned until.
+
+## get_fee_estimate
+
+```shell
+curl -X POST http://127.0.0.1:18081/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "get_fee_estimate"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "0",
+    "jsonrpc": "2.0",
+    "result" :{
+      "fee": 382440000,
+      "status": "OK"
+   }
+}
+```
+
+Lookup up fee information
+
+### Inputs
+
+None
+
+### Outputs
+
+Parameter | Type | Description
+--------- | ------- | -----------
+fee |  unsigned int | Current fee in  atomic units per kB
+status | string | General RPC error code. "OK" means everything looks good.
