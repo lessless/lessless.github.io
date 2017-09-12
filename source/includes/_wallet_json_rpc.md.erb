@@ -395,6 +395,35 @@ tx_key_list  | array of string | -
 tx_blob_list  | array of string | -
 
 
+## store
+
+```shell
+curl -X POST http://127.0.0.1:18082/json_rpc \
+  -H 'Content-Type: application/json' \
+  -d '{"jsonrpc": "2.0", "id": "0", "method": "store"}'
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "0",
+  "jsonrpc": "2.0",
+  "result": {
+  }
+}
+```
+
+Save the blockchain.
+
+### Inputs
+
+None
+
+### Outputs
+
+None
+
 ## get_payments
 
 ```shell
